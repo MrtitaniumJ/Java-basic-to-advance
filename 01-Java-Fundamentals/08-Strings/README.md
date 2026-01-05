@@ -1,940 +1,804 @@
-# Java Strings - Working with Text Data
+# Strings in Java - Working with Text
 
-## What are Strings?
+## Simple Explanation
 
-A String is a **sequence of characters** that represents text. Think of it as:
-- **A sentence** made up of individual letters
-- **A chain** where each link is a character
-- **Text data** that you can read, modify, and manipulate
+Think of a **String** as a **chain of letters** (like a necklace made of letter beads):
+- Each **bead** is a character
+- The **chain** is immutable (cannot change individual beads)
+- You can make a **new chain** by combining or modifying existing ones
+- You can **examine** any bead by its position
 
-```java
-String message = "Hello, World!";
-//               H e l l o ,   W o r l d !
-//               0 1 2 3 4 5 6 7 8 9 10 11 12
+### Real-World Analogies
+- **Book** = String (sequence of characters)
+- **DNA sequence** = String (sequence of genetic codes)
+- **Phone number** = String (sequence of digits)
+- **Sentence** = String (sequence of words and punctuation)
+
+## Professional Definition
+
+A **String** in Java is an object that represents a sequence of characters. Strings are immutable, meaning once created, their content cannot be changed. Any operation that appears to modify a string actually creates a new string object.
+
+## String Characteristics
+
+### Key Properties:
+- **Immutable**: Cannot be changed after creation
+- **Object Type**: Reference type, not primitive
+- **UTF-16 Encoding**: Supports Unicode characters
+- **String Pool**: Java maintains a pool of string literals for memory optimization
+- **Rich API**: Extensive methods for string manipulation
+
+### Memory Representation:
+```
+String name = "Hello";
+
+Memory:
+┌─────────────────┐
+│ String Object   │
+├─────────────────┤
+│ char[] value    │ → ['H','e','l','l','o']
+│ int length = 5  │
+│ hash code       │
+└─────────────────┘
 ```
 
-In Java, Strings are **objects** (not primitive types) with many useful methods.
+## String Creation
 
-## Why are Strings Important?
-
-Strings are everywhere in programming:
-- **User input**: Names, addresses, passwords
-- **File processing**: Reading and writing text files
-- **Web development**: URLs, HTML content, JSON data
-- **Data formatting**: Reports, messages, output display
-
----
-
-## String Creation and Declaration
-
-### Method 1: String Literal (Most Common)
+### 1. String Literals
 ```java
-public class StringBasics {
-    public static void main(String[] args) {
-        // String literals - stored in string pool for efficiency
-        String name = "John Doe";
-        String greeting = "Hello, World!";
-        String empty = "";
-        
-        System.out.println("Name: " + name);
-        System.out.println("Greeting: " + greeting);
-        System.out.println("Empty string: '" + empty + "'");
-        
-        // String properties
-        System.out.println("Name length: " + name.length());
-        System.out.println("Greeting length: " + greeting.length());
-        System.out.println("Empty string length: " + empty.length());
-    }
-}
+// Using string literals (preferred method)
+String name = "Alice";
+String message = "Hello World!";
+String empty = "";
+
+// String literals are stored in String Pool
+String str1 = "Hello";
+String str2 = "Hello";
+// str1 and str2 refer to the same object in memory
 ```
 
-### Method 2: Using new Keyword
+### 2. Using new Keyword
 ```java
-public class StringCreation {
-    public static void main(String[] args) {
-        // Using new keyword (creates new object every time)
-        String str1 = new String("Hello");
-        String str2 = new String("Hello");
-        
-        // String literals (may reuse objects from string pool)
-        String str3 = "Hello";
-        String str4 = "Hello";
-        
-        // Comparing references vs content
-        System.out.println("str1 == str2: " + (str1 == str2));         // false
-        System.out.println("str3 == str4: " + (str3 == str4));         // true
-        System.out.println("str1.equals(str2): " + str1.equals(str2)); // true
-        System.out.println("str1.equals(str3): " + str1.equals(str3)); // true
-    }
-}
+// Creates new String object (not recommended for literals)
+String name = new String("Alice");
+String message = new String("Hello World!");
+
+// This creates two objects: one in pool, one in heap
+String str1 = "Hello";        // In string pool
+String str2 = new String("Hello");  // New object in heap
+// str1 == str2 is false (different objects)
+// str1.equals(str2) is true (same content)
 ```
 
-### Method 3: From char Array
+### 3. From Character Array
 ```java
-public class StringFromChars {
-    public static void main(String[] args) {
-        // Create string from character array
-        char[] letters = {'J', 'a', 'v', 'a'};
-        String language = new String(letters);
-        
-        System.out.println("Language: " + language);
-        
-        // Create string from part of char array
-        char[] message = {'H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd'};
-        String greeting = new String(message, 0, 5);  // "Hello"
-        String target = new String(message, 6, 5);    // "World"
-        
-        System.out.println("Greeting: " + greeting);
-        System.out.println("Target: " + target);
-    }
-}
+char[] charArray = {'H', 'e', 'l', 'l', 'o'};
+String fromChars = new String(charArray);
+System.out.println(fromChars);  // "Hello"
+
+// From part of char array
+String partial = new String(charArray, 1, 3);  // "ell"
 ```
 
----
+## String Operations
 
-## Essential String Methods
+### 1. Basic String Information
 
-### 1. Basic Information Methods
-
+#### Length and Empty Check
 ```java
-public class StringInfo {
-    public static void main(String[] args) {
-        String text = "Java Programming";
-        
-        // Length
-        System.out.println("Text: '" + text + "'");
-        System.out.println("Length: " + text.length());
-        
-        // Check if empty
-        System.out.println("Is empty: " + text.isEmpty());
-        
-        // Check if blank (empty or only whitespace) - Java 11+
-        System.out.println("Is blank: " + text.isBlank());
-        
-        String spaces = "   ";
-        System.out.println("Spaces empty: " + spaces.isEmpty());   // false
-        System.out.println("Spaces blank: " + spaces.isBlank());   // true
-    }
-}
+String text = "Hello World";
+
+// Get length
+int length = text.length();          // length = 11
+System.out.println("Length: " + length);
+
+// Check if empty
+String empty = "";
+boolean isEmpty = empty.isEmpty();   // true
+boolean isBlank = empty.isBlank();   // true (Java 11+)
+
+// Check blank (contains only whitespace)
+String spaces = "   ";
+boolean isSpacesEmpty = spaces.isEmpty();  // false
+boolean isSpacesBlank = spaces.isBlank();  // true (Java 11+)
 ```
 
-### 2. Character Access and Manipulation
-
+#### Character Access
 ```java
-public class StringAccess {
-    public static void main(String[] args) {
-        String word = "Programming";
-        
-        // Get character at specific index
-        System.out.println("Word: " + word);
-        System.out.println("First character: " + word.charAt(0));
-        System.out.println("Last character: " + word.charAt(word.length() - 1));
-        System.out.println("Middle character: " + word.charAt(word.length() / 2));
-        
-        // Get character codes (ASCII/Unicode values)
-        System.out.println("ASCII of 'P': " + (int) word.charAt(0));
-        System.out.println("ASCII of 'g': " + (int) word.charAt(10));
-        
-        // Convert to character array
-        char[] characters = word.toCharArray();
-        System.out.println("Characters: ");
-        for (int i = 0; i < characters.length; i++) {
-            System.out.println("Index " + i + ": " + characters[i]);
-        }
-    }
-}
+String word = "Programming";
+
+// Get character at specific index
+char firstChar = word.charAt(0);     // 'P'
+char lastChar = word.charAt(word.length() - 1);  // 'g'
+
+// Get character code
+int asciiValue = (int) firstChar;    // 80
+
+// Convert to character array
+char[] charArray = word.toCharArray();
+System.out.println(Arrays.toString(charArray));
+// ['P','r','o','g','r','a','m','m','i','n','g']
 ```
 
-### 3. Case Conversion Methods
+### 2. String Comparison
 
+#### Content Comparison
 ```java
-public class StringCase {
-    public static void main(String[] args) {
-        String original = "Java Programming Language";
-        
-        // Case conversions
-        String uppercase = original.toUpperCase();
-        String lowercase = original.toLowerCase();
-        
-        System.out.println("Original: " + original);
-        System.out.println("Uppercase: " + uppercase);
-        System.out.println("Lowercase: " + lowercase);
-        
-        // Real-world example: Email validation
-        String email1 = "John.Doe@GMAIL.COM";
-        String email2 = "john.doe@gmail.com";
-        
-        // Normalize emails to lowercase for comparison
-        String normalizedEmail1 = email1.toLowerCase();
-        String normalizedEmail2 = email2.toLowerCase();
-        
-        System.out.println("\nEmail comparison:");
-        System.out.println("Original emails equal: " + email1.equals(email2));
-        System.out.println("Normalized emails equal: " + normalizedEmail1.equals(normalizedEmail2));
-    }
-}
+String str1 = "Hello";
+String str2 = "Hello";
+String str3 = "hello";
+String str4 = new String("Hello");
+
+// equals() - case sensitive
+boolean equal1 = str1.equals(str2);        // true
+boolean equal2 = str1.equals(str3);        // false
+boolean equal3 = str1.equals(str4);        // true
+
+// equalsIgnoreCase() - ignore case
+boolean equalIgnoreCase = str1.equalsIgnoreCase(str3);  // true
+
+// Never use == for content comparison!
+boolean reference1 = (str1 == str2);       // true (same object in pool)
+boolean reference2 = (str1 == str4);       // false (different objects)
+
+// compareTo() - lexicographic comparison
+String name1 = "Alice";
+String name2 = "Bob";
+String name3 = "Alice";
+
+int result1 = name1.compareTo(name2);  // negative (Alice < Bob)
+int result2 = name2.compareTo(name1);  // positive (Bob > Alice)
+int result3 = name1.compareTo(name3);  // 0 (Alice == Alice)
+
+// compareToIgnoreCase()
+int result4 = "HELLO".compareToIgnoreCase("hello");  // 0
 ```
 
-### 4. String Searching and Checking
-
+#### Prefix and Suffix Check
 ```java
-public class StringSearching {
-    public static void main(String[] args) {
-        String sentence = "Java is a powerful programming language";
-        
-        // Check if string contains substring
-        System.out.println("Contains 'Java': " + sentence.contains("Java"));
-        System.out.println("Contains 'Python': " + sentence.contains("Python"));
-        
-        // Find index of substring
-        int javaIndex = sentence.indexOf("Java");
-        int powerfulIndex = sentence.indexOf("powerful");
-        int notFoundIndex = sentence.indexOf("Python");
-        
-        System.out.println("Index of 'Java': " + javaIndex);
-        System.out.println("Index of 'powerful': " + powerfulIndex);
-        System.out.println("Index of 'Python': " + notFoundIndex); // -1 means not found
-        
-        // Check start and end
-        System.out.println("Starts with 'Java': " + sentence.startsWith("Java"));
-        System.out.println("Ends with 'language': " + sentence.endsWith("language"));
-        System.out.println("Starts with 'Python': " + sentence.startsWith("Python"));
-        
-        // Find last occurrence
-        String repeated = "Java is great, Java is powerful, Java is popular";
-        System.out.println("First 'Java': " + repeated.indexOf("Java"));
-        System.out.println("Last 'Java': " + repeated.lastIndexOf("Java"));
-    }
-}
+String filename = "document.pdf";
+
+// Check prefix (starts with)
+boolean isDoc = filename.startsWith("doc");     // true
+boolean isImage = filename.startsWith("img");   // false
+
+// Check suffix (ends with)
+boolean isPDF = filename.endsWith(".pdf");      // true
+boolean isWord = filename.endsWith(".docx");    // false
+
+// Check at specific position
+boolean hasDocAt0 = filename.startsWith("doc", 0);  // true
+boolean hasDocAt2 = filename.startsWith("doc", 2);  // false
 ```
 
-### 5. String Extraction (Substrings)
+### 3. String Searching
 
+#### Finding Characters and Substrings
 ```java
-public class StringExtraction {
-    public static void main(String[] args) {
-        String fullName = "John Michael Doe";
-        String email = "john.doe@company.com";
-        String phoneNumber = "+1-555-123-4567";
-        
-        // Extract parts using substring
-        System.out.println("Full name: " + fullName);
-        
-        // Extract first name (from start to first space)
-        int firstSpace = fullName.indexOf(" ");
-        String firstName = fullName.substring(0, firstSpace);
-        
-        // Extract last name (from last space to end)
-        int lastSpace = fullName.lastIndexOf(" ");
-        String lastName = fullName.substring(lastSpace + 1);
-        
-        // Extract middle name
-        String middleName = fullName.substring(firstSpace + 1, lastSpace);
-        
-        System.out.println("First name: " + firstName);
-        System.out.println("Middle name: " + middleName);
-        System.out.println("Last name: " + lastName);
-        
-        // Extract email parts
-        int atIndex = email.indexOf("@");
-        String username = email.substring(0, atIndex);
-        String domain = email.substring(atIndex + 1);
-        
-        System.out.println("\nEmail: " + email);
-        System.out.println("Username: " + username);
-        System.out.println("Domain: " + domain);
-        
-        // Extract phone number parts
-        String[] phoneParts = phoneNumber.split("-");
-        System.out.println("\nPhone: " + phoneNumber);
-        System.out.println("Country code: " + phoneParts[0]);
-        System.out.println("Area code: " + phoneParts[1]);
-        System.out.println("Exchange: " + phoneParts[2]);
-        System.out.println("Number: " + phoneParts[3]);
-    }
-}
+String text = "Java Programming is fun!";
+
+// Find first occurrence
+int firstA = text.indexOf('a');         // 1 (first 'a')
+int firstProg = text.indexOf("Programming");  // 5
+
+// Find last occurrence  
+int lastA = text.lastIndexOf('a');      // 7 (last 'a')
+int lastProg = text.lastIndexOf("Programming");  // 5
+
+// Find from specific position
+int aAfterIndex5 = text.indexOf('a', 5);  // 7
+
+// Check if contains
+boolean hasJava = text.contains("Java");     // true
+boolean hasPython = text.contains("Python"); // false
+
+// Return -1 if not found
+int notFound = text.indexOf("xyz");     // -1
 ```
 
-### 6. String Modification Methods
+### 4. String Extraction
 
+#### Substring Operations
 ```java
-public class StringModification {
-    public static void main(String[] args) {
-        String messy = "   Hello World   ";
-        String password = "myPassword123";
-        String sentence = "Java-is-awesome";
-        
-        // Remove whitespace
-        System.out.println("Original: '" + messy + "'");
-        System.out.println("Trimmed: '" + messy.trim() + "'");
-        
-        // Replace characters and substrings
-        System.out.println("\nPassword: " + password);
-        String hiddenPassword = password.replace('s', '*');
-        System.out.println("Hidden: " + hiddenPassword);
-        
-        // Replace all occurrences
-        String noNumbers = password.replaceAll("[0-9]", "X");
-        System.out.println("No numbers: " + noNumbers);
-        
-        // Replace first occurrence only
-        String firstReplaced = sentence.replaceFirst("-", " ");
-        System.out.println("Sentence: " + sentence);
-        System.out.println("First replaced: " + firstReplaced);
-        
-        // Replace all occurrences
-        String allReplaced = sentence.replaceAll("-", " ");
-        System.out.println("All replaced: " + allReplaced);
-    }
-}
+String sentence = "Learning Java Programming";
+
+// Extract substring from index to end
+String fromIndex8 = sentence.substring(8);     // "Java Programming"
+
+// Extract substring between indices
+String javaPart = sentence.substring(8, 12);   // "Java"
+
+// Extract characters
+char[] chars = sentence.toCharArray();
+
+// Get specific range as char array
+// (No direct method, need custom approach)
+String subText = sentence.substring(8, 12);
+char[] subChars = subText.toCharArray();
 ```
 
----
+### 5. String Modification (Creates New Strings)
 
-## String Concatenation
-
-### Method 1: Using + Operator
+#### Case Conversion
 ```java
-public class StringConcatenation {
-    public static void main(String[] args) {
-        String firstName = "John";
-        String lastName = "Doe";
-        int age = 30;
-        double salary = 75000.50;
-        
-        // Simple concatenation
-        String fullName = firstName + " " + lastName;
-        System.out.println("Full name: " + fullName);
-        
-        // Concatenation with other types
-        String info = "Name: " + fullName + ", Age: " + age + ", Salary: $" + salary;
-        System.out.println(info);
-        
-        // Building complex strings
-        String address = "123 Main St, " + "Anytown, " + "USA " + "12345";
-        System.out.println("Address: " + address);
-        
-        // Be careful with operator precedence
-        String calculation = "Result: " + 5 + 3;        // "Result: 53"
-        String calculation2 = "Result: " + (5 + 3);     // "Result: 8"
-        
-        System.out.println(calculation);
-        System.out.println(calculation2);
-    }
-}
+String original = "Hello World";
+
+// Convert to uppercase
+String upper = original.toUpperCase();     // "HELLO WORLD"
+
+// Convert to lowercase  
+String lower = original.toLowerCase();     // "hello world"
+
+// Original string unchanged (immutable)
+System.out.println(original);             // "Hello World"
 ```
 
-### Method 2: Using concat() Method
+#### Trimming and Replacing
 ```java
-public class StringConcat {
-    public static void main(String[] args) {
-        String greeting = "Hello";
-        String target = "World";
-        
-        // Using concat method
-        String message = greeting.concat(", ").concat(target).concat("!");
-        System.out.println("Message: " + message);
-        
-        // Chaining multiple concat calls
-        String result = "Java"
-                       .concat(" is")
-                       .concat(" a")
-                       .concat(" programming")
-                       .concat(" language");
-        System.out.println("Result: " + result);
-    }
-}
+String messy = "  Hello World  ";
+
+// Remove leading and trailing whitespace
+String trimmed = messy.trim();            // "Hello World"
+
+// Replace characters
+String text = "Hello World";
+String replaced1 = text.replace('o', '0');      // "Hell0 W0rld"
+String replaced2 = text.replace("World", "Java"); // "Hello Java"
+
+// Replace all occurrences (regex)
+String numbers = "123-456-7890";
+String onlyNumbers = numbers.replaceAll("-", "");  // "1234567890"
+
+// Replace first occurrence
+String firstOnly = numbers.replaceFirst("-", ".");  // "123.456-7890"
 ```
 
-### Method 3: Using String.format()
+### 6. String Building and Concatenation
+
+#### Concatenation Methods
 ```java
-public class StringFormatting {
-    public static void main(String[] args) {
-        String name = "Alice";
-        int age = 25;
-        double gpa = 3.85;
-        boolean isStudent = true;
-        
-        // Using String.format (similar to printf in C)
-        String formatted = String.format("Name: %s, Age: %d, GPA: %.2f, Student: %b", 
-                                        name, age, gpa, isStudent);
-        System.out.println(formatted);
-        
-        // Format numbers with specific patterns
-        double price = 1234.567;
-        String priceFormatted = String.format("Price: $%.2f", price);
-        System.out.println(priceFormatted);
-        
-        // Format with padding and alignment
-        System.out.println("Product Report:");
-        System.out.println(String.format("%-15s %8s %10s", "Product", "Quantity", "Price"));
-        System.out.println(String.format("%-15s %8d $%9.2f", "Laptop", 5, 999.99));
-        System.out.println(String.format("%-15s %8d $%9.2f", "Mouse", 25, 29.99));
-        System.out.println(String.format("%-15s %8d $%9.2f", "Keyboard", 10, 79.99));
-    }
-}
+// Method 1: Using + operator
+String first = "Hello";
+String second = "World";
+String result1 = first + " " + second;    // "Hello World"
+
+// Method 2: Using concat() method
+String result2 = first.concat(" ").concat(second);  // "Hello World"
+
+// Method 3: Using String.join() (Java 8+)
+String result3 = String.join(" ", first, second);   // "Hello World"
+
+// Join with custom delimiter
+String[] words = {"Java", "is", "awesome"};
+String sentence = String.join(" ", words);          // "Java is awesome"
+String csv = String.join(",", words);               // "Java,is,awesome"
 ```
 
----
-
-## StringBuilder - Efficient String Building
-
-When you need to build strings with many operations, StringBuilder is more efficient:
-
+#### StringBuilder for Multiple Operations
 ```java
-public class StringBuilderExample {
-    public static void main(String[] args) {
-        // Problem: String concatenation in loops is inefficient
-        // Each + operation creates a new String object
-        
-        long startTime = System.currentTimeMillis();
-        
-        // Inefficient way (creates many temporary String objects)
-        String result1 = "";
-        for (int i = 0; i < 1000; i++) {
-            result1 += "Number " + i + " ";
-        }
-        
-        long middleTime = System.currentTimeMillis();
-        
-        // Efficient way using StringBuilder
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 1000; i++) {
-            sb.append("Number ").append(i).append(" ");
-        }
-        String result2 = sb.toString();
-        
-        long endTime = System.currentTimeMillis();
-        
-        System.out.println("String concatenation time: " + (middleTime - startTime) + "ms");
-        System.out.println("StringBuilder time: " + (endTime - middleTime) + "ms");
-        
-        // StringBuilder methods
-        StringBuilder builder = new StringBuilder("Hello");
-        
-        // Append
-        builder.append(" World");
-        builder.append("!").append(" Java is great!");
-        System.out.println("After append: " + builder.toString());
-        
-        // Insert
-        builder.insert(5, " Beautiful");
-        System.out.println("After insert: " + builder.toString());
-        
-        // Replace
-        builder.replace(6, 15, "Amazing");
-        System.out.println("After replace: " + builder.toString());
-        
-        // Delete
-        builder.delete(5, 13);
-        System.out.println("After delete: " + builder.toString());
-        
-        // Reverse
-        builder.reverse();
-        System.out.println("After reverse: " + builder.toString());
-    }
-}
-```
-
----
-
-## String Comparison
-
-### Proper Ways to Compare Strings
-
-```java
-public class StringComparison {
-    public static void main(String[] args) {
-        String str1 = "Hello";
-        String str2 = "Hello";
-        String str3 = new String("Hello");
-        String str4 = "HELLO";
-        String str5 = null;
-        
-        // == compares references, not content
-        System.out.println("str1 == str2: " + (str1 == str2));     // true (string pool)
-        System.out.println("str1 == str3: " + (str1 == str3));     // false (different objects)
-        
-        // equals() compares content (case-sensitive)
-        System.out.println("str1.equals(str2): " + str1.equals(str2));     // true
-        System.out.println("str1.equals(str3): " + str1.equals(str3));     // true
-        System.out.println("str1.equals(str4): " + str1.equals(str4));     // false
-        
-        // equalsIgnoreCase() ignores case
-        System.out.println("str1.equalsIgnoreCase(str4): " + str1.equalsIgnoreCase(str4)); // true
-        
-        // Safe comparison with null values
-        // System.out.println(str5.equals(str1)); // NullPointerException!
-        
-        // Safe ways to compare with potential null values
-        System.out.println("Objects.equals(str1, str5): " + java.util.Objects.equals(str1, str5)); // false
-        System.out.println("Objects.equals(str5, str5): " + java.util.Objects.equals(str5, str5)); // true
-        
-        // compareTo() for lexicographic comparison
-        System.out.println("str1.compareTo(str2): " + str1.compareTo(str2)); // 0 (equal)
-        System.out.println("str1.compareTo(str4): " + str1.compareTo(str4)); // positive (str1 > str4)
-        
-        String[] names = {"Charlie", "Alice", "Bob", "Diana"};
-        java.util.Arrays.sort(names);
-        System.out.println("Sorted names: " + java.util.Arrays.toString(names));
-    }
-}
-```
-
----
-
-## Real-World String Applications
-
-### 1. User Input Validation
-
-```java
-public class InputValidation {
-    public static void main(String[] args) {
-        // Simulate user inputs
-        String[] emails = {"john@gmail.com", "invalid-email", "alice@yahoo.com", "@domain.com"};
-        String[] passwords = {"weak", "StrongPass123!", "12345678", "NoSpecial123"};
-        String[] phoneNumbers = {"+1-555-123-4567", "5551234567", "555-123-45678", "invalid"};
-        
-        System.out.println("=== Email Validation ===");
-        for (String email : emails) {
-            boolean isValid = validateEmail(email);
-            System.out.println(email + " -> " + (isValid ? "VALID" : "INVALID"));
-        }
-        
-        System.out.println("\n=== Password Validation ===");
-        for (String password : passwords) {
-            boolean isValid = validatePassword(password);
-            System.out.println(password + " -> " + (isValid ? "STRONG" : "WEAK"));
-        }
-        
-        System.out.println("\n=== Phone Number Validation ===");
-        for (String phone : phoneNumbers) {
-            boolean isValid = validatePhoneNumber(phone);
-            System.out.println(phone + " -> " + (isValid ? "VALID" : "INVALID"));
-        }
-    }
-    
-    public static boolean validateEmail(String email) {
-        if (email == null || email.isEmpty()) return false;
-        
-        // Check for @ symbol
-        if (!email.contains("@")) return false;
-        
-        // Check format: something@something.something
-        String[] parts = email.split("@");
-        if (parts.length != 2) return false;
-        
-        String username = parts[0];
-        String domain = parts[1];
-        
-        // Username should not be empty and contain valid characters
-        if (username.isEmpty() || username.contains(" ")) return false;
-        
-        // Domain should contain a dot and not be empty
-        if (!domain.contains(".") || domain.startsWith(".") || domain.endsWith(".")) {
-            return false;
-        }
-        
-        return true;
-    }
-    
-    public static boolean validatePassword(String password) {
-        if (password == null || password.length() < 8) return false;
-        
-        boolean hasUpper = false;
-        boolean hasLower = false;
-        boolean hasDigit = false;
-        boolean hasSpecial = false;
-        
-        for (char c : password.toCharArray()) {
-            if (Character.isUpperCase(c)) hasUpper = true;
-            else if (Character.isLowerCase(c)) hasLower = true;
-            else if (Character.isDigit(c)) hasDigit = true;
-            else hasSpecial = true;
-        }
-        
-        return hasUpper && hasLower && hasDigit && hasSpecial;
-    }
-    
-    public static boolean validatePhoneNumber(String phone) {
-        if (phone == null || phone.isEmpty()) return false;
-        
-        // Remove all non-digit characters except +
-        String cleaned = phone.replaceAll("[^+\\d]", "");
-        
-        // Check if it starts with + for international format
-        if (cleaned.startsWith("+")) {
-            return cleaned.length() >= 11 && cleaned.length() <= 15;
-        } else {
-            return cleaned.length() == 10; // US format
-        }
-    }
-}
-```
-
-### 2. Text Processing System
-
-```java
-public class TextProcessor {
-    public static void main(String[] args) {
-        String article = "Java is a powerful programming language. " +
-                        "Java was developed by Sun Microsystems. " +
-                        "Java is platform independent and object-oriented. " +
-                        "Many large applications are built with Java.";
-        
-        System.out.println("=== Text Analysis Report ===");
-        System.out.println("Original text:");
-        System.out.println(article);
-        System.out.println();
-        
-        // Basic statistics
-        int wordCount = countWords(article);
-        int sentenceCount = countSentences(article);
-        int characterCount = article.length();
-        int characterCountNoSpaces = article.replaceAll("\\s", "").length();
-        
-        System.out.println("Statistics:");
-        System.out.println("- Characters (with spaces): " + characterCount);
-        System.out.println("- Characters (without spaces): " + characterCountNoSpaces);
-        System.out.println("- Words: " + wordCount);
-        System.out.println("- Sentences: " + sentenceCount);
-        
-        // Word frequency
-        System.out.println("\nWord Frequency:");
-        countWordFrequency(article);
-        
-        // Text transformations
-        System.out.println("\nText Transformations:");
-        System.out.println("UPPERCASE: " + article.toUpperCase());
-        System.out.println("lowercase: " + article.toLowerCase());
-        System.out.println("Title Case: " + toTitleCase(article));
-        
-        // Find and replace
-        String modernized = article.replaceAll("Java", "Modern Java");
-        System.out.println("\nModernized text:");
-        System.out.println(modernized);
-    }
-    
-    public static int countWords(String text) {
-        if (text == null || text.trim().isEmpty()) return 0;
-        return text.trim().split("\\s+").length;
-    }
-    
-    public static int countSentences(String text) {
-        if (text == null || text.isEmpty()) return 0;
-        return text.split("[.!?]+").length;
-    }
-    
-    public static void countWordFrequency(String text) {
-        String[] words = text.toLowerCase()
-                            .replaceAll("[^a-zA-Z\\s]", "")
-                            .split("\\s+");
-        
-        // Simple frequency counter using arrays (in real projects, use HashMap)
-        String[] uniqueWords = new String[words.length];
-        int[] frequencies = new int[words.length];
-        int uniqueCount = 0;
-        
-        for (String word : words) {
-            boolean found = false;
-            for (int i = 0; i < uniqueCount; i++) {
-                if (uniqueWords[i].equals(word)) {
-                    frequencies[i]++;
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                uniqueWords[uniqueCount] = word;
-                frequencies[uniqueCount] = 1;
-                uniqueCount++;
-            }
-        }
-        
-        // Print frequencies
-        for (int i = 0; i < uniqueCount; i++) {
-            System.out.println("- " + uniqueWords[i] + ": " + frequencies[i]);
-        }
-    }
-    
-    public static String toTitleCase(String text) {
-        StringBuilder result = new StringBuilder();
-        boolean capitalizeNext = true;
-        
-        for (char c : text.toCharArray()) {
-            if (Character.isWhitespace(c)) {
-                capitalizeNext = true;
-                result.append(c);
-            } else if (capitalizeNext) {
-                result.append(Character.toUpperCase(c));
-                capitalizeNext = false;
-            } else {
-                result.append(Character.toLowerCase(c));
-            }
-        }
-        
-        return result.toString();
-    }
-}
-```
-
-### 3. CSV Data Parser
-
-```java
-public class CSVParser {
-    public static void main(String[] args) {
-        // Simulate CSV data
-        String csvData = "Name,Age,City,Salary\n" +
-                        "John Doe,30,New York,75000\n" +
-                        "Jane Smith,25,Los Angeles,68000\n" +
-                        "Bob Johnson,35,Chicago,82000\n" +
-                        "Alice Brown,28,Houston,71000";
-        
-        System.out.println("=== CSV Data Parser ===");
-        System.out.println("Raw CSV data:");
-        System.out.println(csvData);
-        System.out.println();
-        
-        parseCSV(csvData);
-    }
-    
-    public static void parseCSV(String csvData) {
-        String[] lines = csvData.split("\n");
-        
-        if (lines.length == 0) {
-            System.out.println("No data to parse.");
-            return;
-        }
-        
-        // Parse header
-        String[] headers = lines[0].split(",");
-        System.out.println("Parsed Data:");
-        System.out.println("============");
-        
-        // Print formatted header
-        for (String header : headers) {
-            System.out.printf("%-15s", header);
-        }
-        System.out.println();
-        System.out.println("---------------------------------------------------------------");
-        
-        // Parse data rows
-        double totalSalary = 0;
-        int employeeCount = 0;
-        
-        for (int i = 1; i < lines.length; i++) {
-            String[] values = lines[i].split(",");
-            
-            // Print formatted data
-            for (String value : values) {
-                System.out.printf("%-15s", value);
-            }
-            System.out.println();
-            
-            // Calculate total salary (assuming salary is in the last column)
-            try {
-                double salary = Double.parseDouble(values[values.length - 1]);
-                totalSalary += salary;
-                employeeCount++;
-            } catch (NumberFormatException e) {
-                System.out.println("Warning: Invalid salary format for employee " + values[0]);
-            }
-        }
-        
-        // Calculate and display average salary
-        if (employeeCount > 0) {
-            double averageSalary = totalSalary / employeeCount;
-            System.out.println();
-            System.out.println("Summary:");
-            System.out.printf("Total Employees: %d\n", employeeCount);
-            System.out.printf("Average Salary: $%.2f\n", averageSalary);
-        }
-    }
-}
-```
-
----
-
-## Common String Mistakes and Solutions
-
-### 1. Using == Instead of equals()
-```java
-// ✗ WRONG
-String str1 = new String("Hello");
-String str2 = new String("Hello");
-if (str1 == str2) { // This compares references, not content!
-    System.out.println("Equal");
-}
-
-// ✓ CORRECT
-if (str1.equals(str2)) { // This compares content
-    System.out.println("Equal");
-}
-```
-
-### 2. Not Handling Null Strings
-```java
-// ✗ WRONG - Can cause NullPointerException
-String str = null;
-if (str.equals("Hello")) { // NullPointerException!
-    System.out.println("Found Hello");
-}
-
-// ✓ CORRECT - Multiple safe approaches
-// Approach 1: Check for null first
-if (str != null && str.equals("Hello")) {
-    System.out.println("Found Hello");
-}
-
-// Approach 2: Use constant first (if comparing with literal)
-if ("Hello".equals(str)) { // Safe even if str is null
-    System.out.println("Found Hello");
-}
-
-// Approach 3: Use Objects.equals() for both potentially null
-if (java.util.Objects.equals(str, otherStr)) {
-    System.out.println("Equal");
-}
-```
-
-### 3. Inefficient String Concatenation in Loops
-```java
-// ✗ WRONG - Creates many temporary objects
+// Inefficient - creates many temporary strings
 String result = "";
 for (int i = 0; i < 1000; i++) {
-    result += "Item " + i + " ";
+    result += "a";  // Creates new string each time
 }
 
-// ✓ CORRECT - Use StringBuilder
+// Efficient - uses mutable buffer
 StringBuilder sb = new StringBuilder();
 for (int i = 0; i < 1000; i++) {
-    sb.append("Item ").append(i).append(" ");
+    sb.append("a");  // Modifies existing buffer
 }
 String result = sb.toString();
+
+// StringBuilder methods
+StringBuilder builder = new StringBuilder("Hello");
+builder.append(" World");           // "Hello World"
+builder.insert(5, " Beautiful");   // "Hello Beautiful World"  
+builder.delete(5, 15);             // "Hello World"
+builder.reverse();                 // "dlroW olleH"
+String finalResult = builder.toString();
 ```
 
-### 4. Ignoring String Immutability
-```java
-// ✗ WRONG - Thinking string is modified
-String str = "Hello";
-str.toUpperCase(); // This doesn't change str!
-System.out.println(str); // Still prints "Hello"
+## String Formatting
 
-// ✓ CORRECT - Assign the result
-String str = "Hello";
-str = str.toUpperCase(); // Now str is changed
-System.out.println(str); // Prints "HELLO"
+### 1. printf-style Formatting
+```java
+// Using String.format()
+String name = "Alice";
+int age = 25;
+double salary = 50000.75;
+
+String formatted = String.format("Name: %s, Age: %d, Salary: $%.2f", 
+                                 name, age, salary);
+// "Name: Alice, Age: 25, Salary: $50000.75"
+
+// Common format specifiers
+String examples = String.format(
+    "String: %s%n" +
+    "Integer: %d%n" + 
+    "Float: %.2f%n" +
+    "Character: %c%n" +
+    "Boolean: %b%n",
+    "Hello", 42, 3.14159, 'A', true
+);
+
+// Using System.out.printf()
+System.out.printf("Hello %s, you are %d years old%n", name, age);
 ```
 
-## Practice Exercises
-
-### Exercise 1: Name Formatter
+### 2. Text Blocks (Java 15+)
 ```java
-public class NameFormatter {
-    public static void main(String[] args) {
-        // Given various name formats, normalize them
-        String[] names = {
-            "john doe",
-            "JANE SMITH", 
-            "bob_johnson",
-            "alice-brown",
-            "charlie.wilson"
-        };
-        
-        // Convert all to "First Last" format (Title Case)
-        // Remove underscores, hyphens, dots
-        // Handle edge cases (empty strings, null values)
-    }
+// Multi-line strings with text blocks
+String html = """
+    <html>
+        <body>
+            <h1>Welcome to Java</h1>
+            <p>Learning strings is fun!</p>
+        </body>
+    </html>
+    """;
+
+String sql = """
+    SELECT customer_name, order_date, total_amount
+    FROM orders 
+    WHERE order_date >= '2024-01-01'
+    ORDER BY order_date DESC
+    """;
+```
+
+## Common String Patterns and Use Cases
+
+### 1. Input Validation
+```java
+public static boolean isValidEmail(String email) {
+    return email != null && 
+           email.contains("@") && 
+           email.contains(".") &&
+           email.indexOf("@") < email.lastIndexOf(".");
+}
+
+public static boolean isValidPhoneNumber(String phone) {
+    if (phone == null) return false;
+    
+    // Remove common separators
+    String cleaned = phone.replaceAll("[-()\\s]", "");
+    
+    // Check if all digits and proper length
+    return cleaned.matches("\\d{10}");
 }
 ```
 
-### Exercise 2: Password Generator
+### 2. String Processing
 ```java
-public class PasswordGenerator {
-    public static void main(String[] args) {
-        // Create a password generator that:
-        // 1. Takes a base word/phrase
-        // 2. Adds numbers and special characters
-        // 3. Ensures minimum length and complexity
-        // 4. Provides multiple variations
-        
-        String baseWord = "JavaProgramming";
-        // Generate secure passwords based on this
+public static String capitalizeWords(String text) {
+    if (text == null || text.isEmpty()) return text;
+    
+    String[] words = text.toLowerCase().split("\\s+");
+    StringBuilder result = new StringBuilder();
+    
+    for (String word : words) {
+        if (word.length() > 0) {
+            result.append(Character.toUpperCase(word.charAt(0)))
+                  .append(word.substring(1))
+                  .append(" ");
+        }
     }
+    
+    return result.toString().trim();
+}
+
+// Example usage
+String title = capitalizeWords("hello world java programming");
+// "Hello World Java Programming"
+```
+
+### 3. String Parsing
+```java
+// Parse CSV data
+String csvLine = "Alice,25,Engineer,50000";
+String[] fields = csvLine.split(",");
+String name = fields[0];
+int age = Integer.parseInt(fields[1]);
+String job = fields[2];
+double salary = Double.parseDouble(fields[3]);
+
+// Parse key-value pairs
+String config = "host=localhost;port=8080;ssl=true";
+String[] pairs = config.split(";");
+Map<String, String> settings = new HashMap<>();
+
+for (String pair : pairs) {
+    String[] keyValue = pair.split("=");
+    settings.put(keyValue[0], keyValue[1]);
 }
 ```
 
-### Exercise 3: Log File Processor
+## String Performance Considerations
+
+### 1. String Pool and Memory
 ```java
-public class LogProcessor {
-    public static void main(String[] args) {
-        // Simulate log entries
-        String[] logEntries = {
-            "2024-01-15 10:30:45 INFO User john.doe logged in",
-            "2024-01-15 10:31:12 ERROR Database connection failed",
-            "2024-01-15 10:31:45 INFO User jane.smith logged in",
-            "2024-01-15 10:32:30 WARN Low disk space detected",
-            "2024-01-15 10:33:15 ERROR File not found: data.txt"
-        };
-        
-        // Parse and analyze:
-        // 1. Extract timestamp, level, and message
-        // 2. Count entries by log level
-        // 3. Find all error messages
-        // 4. Extract user activities
-    }
+// String literals are pooled
+String s1 = "Hello";     // Created in string pool
+String s2 = "Hello";     // Reuses existing object from pool
+System.out.println(s1 == s2);  // true
+
+// new String() creates separate object
+String s3 = new String("Hello");  // New object in heap
+System.out.println(s1 == s3);     // false
+
+// intern() method adds to pool
+String s4 = s3.intern();          // Returns pooled version
+System.out.println(s1 == s4);     // true
+```
+
+### 2. StringBuilder vs String Concatenation
+```java
+// Inefficient for many concatenations
+String result = "";
+long start = System.currentTimeMillis();
+for (int i = 0; i < 10000; i++) {
+    result += "x";  // Creates new string each time
 }
-```
+long time1 = System.currentTimeMillis() - start;
 
-## Quick Reference
-
-### String Creation
-```java
-String str1 = "Hello";                    // String literal
-String str2 = new String("Hello");        // New object
-String str3 = new String(charArray);      // From char array
-```
-
-### Essential Methods
-```java
-str.length()                    // Get length
-str.charAt(index)              // Get character at index
-str.substring(start, end)      // Extract substring
-str.indexOf("text")            // Find index of substring
-str.contains("text")           // Check if contains substring
-str.startsWith("prefix")       // Check if starts with
-str.endsWith("suffix")         // Check if ends with
-str.toLowerCase()              // Convert to lowercase
-str.toUpperCase()              // Convert to uppercase
-str.trim()                     // Remove leading/trailing spaces
-str.replace(old, new)          // Replace characters/substrings
-str.split("delimiter")         // Split into array
-```
-
-### String Comparison
-```java
-str1.equals(str2)                      // Content comparison
-str1.equalsIgnoreCase(str2)           // Ignore case comparison
-str1.compareTo(str2)                  // Lexicographic comparison
-Objects.equals(str1, str2)            // Null-safe comparison
-```
-
-### String Building
-```java
+// Efficient for many concatenations
 StringBuilder sb = new StringBuilder();
-sb.append("text").append(number).append(char);
-String result = sb.toString();
+start = System.currentTimeMillis();
+for (int i = 0; i < 10000; i++) {
+    sb.append("x");  // Modifies buffer
+}
+String result2 = sb.toString();
+long time2 = System.currentTimeMillis() - start;
+
+System.out.println("String concatenation: " + time1 + "ms");
+System.out.println("StringBuilder: " + time2 + "ms");
+```
+
+## Interview Questions & Answers
+
+**Q1: What is the difference between String, StringBuilder, and StringBuffer?**
+**A:**
+- **String**: Immutable, thread-safe by nature, creates new objects for modifications
+- **StringBuilder**: Mutable, not thread-safe, efficient for single-threaded concatenation
+- **StringBuffer**: Mutable, thread-safe (synchronized), slower than StringBuilder
+
+**Q2: What is String pool and why is it used?**
+**A:** String pool is a memory area in heap where string literals are stored. It's used for memory optimization - identical string literals share the same memory location.
+
+**Q3: Why should we use equals() instead of == for string comparison?**
+**A:**
+- `==` compares object references (memory addresses)
+- `equals()` compares actual content
+- Use `equals()` for content comparison, `==` only for reference comparison
+
+**Q4: What happens when you do string concatenation with +?**
+**A:** Java compiler optimizes consecutive literal concatenations. For variables, it may create temporary StringBuilder objects. For multiple concatenations in loops, use StringBuilder explicitly.
+
+**Q5: How do you reverse a string in Java?**
+**A:**
+```java
+// Method 1: Using StringBuilder
+String original = "Hello";
+String reversed = new StringBuilder(original).reverse().toString();
+
+// Method 2: Manual approach
+public static String reverse(String str) {
+    char[] chars = str.toCharArray();
+    int left = 0, right = str.length() - 1;
+    while (left < right) {
+        char temp = chars[left];
+        chars[left] = chars[right];
+        chars[right] = temp;
+        left++; right--;
+    }
+    return new String(chars);
+}
+```
+
+## Complete Example Program
+
+```java
+import java.util.*;
+
+/**
+ * Comprehensive String operations demonstration
+ */
+public class StringsExample {
+    
+    public static void main(String[] args) {
+        // Demonstrate basic string operations
+        demonstrateBasicOperations();
+        
+        // Demonstrate string comparison
+        demonstrateStringComparison();
+        
+        // Demonstrate string manipulation
+        demonstrateStringManipulation();
+        
+        // Demonstrate StringBuilder
+        demonstrateStringBuilder();
+        
+        // Real-world examples
+        demonstrateRealWorldExamples();
+    }
+    
+    public static void demonstrateBasicOperations() {
+        System.out.println("=== BASIC STRING OPERATIONS ===");
+        
+        String text = "Java Programming";
+        
+        // Basic information
+        System.out.println("Original: " + text);
+        System.out.println("Length: " + text.length());
+        System.out.println("Character at index 5: " + text.charAt(5));
+        System.out.println("Is empty: " + text.isEmpty());
+        
+        // Character operations
+        char[] charArray = text.toCharArray();
+        System.out.println("Character array: " + Arrays.toString(charArray));
+        
+        // Case operations
+        System.out.println("Uppercase: " + text.toUpperCase());
+        System.out.println("Lowercase: " + text.toLowerCase());
+        
+        System.out.println();
+    }
+    
+    public static void demonstrateStringComparison() {
+        System.out.println("=== STRING COMPARISON ===");
+        
+        String str1 = "Hello";
+        String str2 = "Hello";
+        String str3 = "hello";
+        String str4 = new String("Hello");
+        
+        // Reference comparison
+        System.out.println("str1 == str2: " + (str1 == str2));  // true (same object)
+        System.out.println("str1 == str4: " + (str1 == str4));  // false (different objects)
+        
+        // Content comparison
+        System.out.println("str1.equals(str2): " + str1.equals(str2));  // true
+        System.out.println("str1.equals(str3): " + str1.equals(str3));  // false
+        System.out.println("str1.equals(str4): " + str1.equals(str4));  // true
+        
+        // Case-insensitive comparison
+        System.out.println("str1.equalsIgnoreCase(str3): " + str1.equalsIgnoreCase(str3));  // true
+        
+        // Lexicographic comparison
+        System.out.println("\"Apple\".compareTo(\"Banana\"): " + "Apple".compareTo("Banana"));  // negative
+        System.out.println("\"Zebra\".compareTo(\"Apple\"): " + "Zebra".compareTo("Apple"));   // positive
+        
+        System.out.println();
+    }
+    
+    public static void demonstrateStringManipulation() {
+        System.out.println("=== STRING MANIPULATION ===");
+        
+        String text = "  Welcome to Java Programming  ";
+        System.out.println("Original: '" + text + "'");
+        
+        // Trimming
+        String trimmed = text.trim();
+        System.out.println("Trimmed: '" + trimmed + "'");
+        
+        // Searching
+        System.out.println("Index of 'Java': " + trimmed.indexOf("Java"));
+        System.out.println("Last index of 'a': " + trimmed.lastIndexOf('a'));
+        System.out.println("Contains 'Program': " + trimmed.contains("Program"));
+        
+        // Substring
+        System.out.println("Substring(11): " + trimmed.substring(11));
+        System.out.println("Substring(11, 15): " + trimmed.substring(11, 15));
+        
+        // Prefix/Suffix
+        System.out.println("Starts with 'Welcome': " + trimmed.startsWith("Welcome"));
+        System.out.println("Ends with 'ming': " + trimmed.endsWith("ming"));
+        
+        // Replacement
+        String replaced = trimmed.replace("Java", "Python");
+        System.out.println("Replaced Java with Python: " + replaced);
+        
+        // Splitting
+        String sentence = "apple,banana,cherry,date";
+        String[] fruits = sentence.split(",");
+        System.out.println("Split fruits: " + Arrays.toString(fruits));
+        
+        // Joining
+        String rejoined = String.join(" | ", fruits);
+        System.out.println("Rejoined: " + rejoined);
+        
+        System.out.println();
+    }
+    
+    public static void demonstrateStringBuilder() {
+        System.out.println("=== STRINGBUILDER OPERATIONS ===");
+        
+        // Creating StringBuilder
+        StringBuilder sb = new StringBuilder("Hello");
+        System.out.println("Initial: " + sb.toString());
+        
+        // Appending
+        sb.append(" World");
+        sb.append("!");
+        sb.append(" Java is ").append(2024);
+        System.out.println("After appending: " + sb.toString());
+        
+        // Inserting
+        sb.insert(13, " Amazing");
+        System.out.println("After insert: " + sb.toString());
+        
+        // Deleting
+        sb.delete(13, 21);  // Remove " Amazing"
+        System.out.println("After delete: " + sb.toString());
+        
+        // Replacing
+        sb.replace(14, 18, "Python");
+        System.out.println("After replace: " + sb.toString());
+        
+        // Reversing
+        StringBuilder reversed = new StringBuilder(sb).reverse();
+        System.out.println("Reversed: " + reversed.toString());
+        
+        // StringBuilder vs String concatenation performance
+        demonstratePerformance();
+        
+        System.out.println();
+    }
+    
+    public static void demonstratePerformance() {
+        int iterations = 10000;
+        
+        // String concatenation
+        long start = System.nanoTime();
+        String result1 = "";
+        for (int i = 0; i < iterations; i++) {
+            result1 += "x";
+        }
+        long timeString = System.nanoTime() - start;
+        
+        // StringBuilder
+        start = System.nanoTime();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < iterations; i++) {
+            sb.append("x");
+        }
+        String result2 = sb.toString();
+        long timeStringBuilder = System.nanoTime() - start;
+        
+        System.out.println("Performance comparison (" + iterations + " iterations):");
+        System.out.println("String concatenation: " + (timeString / 1_000_000) + " ms");
+        System.out.println("StringBuilder: " + (timeStringBuilder / 1_000_000) + " ms");
+        System.out.println("StringBuilder is " + (timeString / timeStringBuilder) + "x faster");
+    }
+    
+    public static void demonstrateRealWorldExamples() {
+        System.out.println("=== REAL-WORLD EXAMPLES ===");
+        
+        // Email validation
+        String[] emails = {"user@example.com", "invalid-email", "test@domain.co.uk"};
+        for (String email : emails) {
+            System.out.println(email + " is valid: " + isValidEmail(email));
+        }
+        
+        // Name formatting
+        String[] names = {"john doe", "ALICE SMITH", "bob JOHNSON"};
+        for (String name : names) {
+            System.out.println("Original: " + name + " → Formatted: " + formatName(name));
+        }
+        
+        // Password strength
+        String[] passwords = {"123456", "Password123", "Str0ng!Pass"};
+        for (String password : passwords) {
+            System.out.println("Password: " + password + " → Strength: " + getPasswordStrength(password));
+        }
+        
+        // Text statistics
+        String article = "Java is a popular programming language. " +
+                        "It is object-oriented and platform-independent. " +
+                        "Java is used for web development, mobile apps, and enterprise software.";
+        analyzeText(article);
+        
+        System.out.println();
+    }
+    
+    public static boolean isValidEmail(String email) {
+        if (email == null || email.trim().isEmpty()) return false;
+        
+        email = email.trim().toLowerCase();
+        
+        // Basic validation
+        return email.contains("@") && 
+               email.contains(".") && 
+               email.indexOf("@") > 0 &&
+               email.indexOf("@") < email.lastIndexOf(".") &&
+               !email.startsWith("@") && 
+               !email.endsWith("@") &&
+               !email.startsWith(".") && 
+               !email.endsWith(".");
+    }
+    
+    public static String formatName(String name) {
+        if (name == null || name.trim().isEmpty()) return name;
+        
+        String[] words = name.trim().toLowerCase().split("\\s+");
+        StringBuilder formatted = new StringBuilder();
+        
+        for (String word : words) {
+            if (word.length() > 0) {
+                formatted.append(Character.toUpperCase(word.charAt(0)))
+                         .append(word.substring(1))
+                         .append(" ");
+            }
+        }
+        
+        return formatted.toString().trim();
+    }
+    
+    public static String getPasswordStrength(String password) {
+        if (password == null) return "Invalid";
+        
+        int score = 0;
+        
+        if (password.length() >= 8) score++;
+        if (password.matches(".*[a-z].*")) score++;  // lowercase
+        if (password.matches(".*[A-Z].*")) score++;  // uppercase  
+        if (password.matches(".*[0-9].*")) score++;  // digit
+        if (password.matches(".*[!@#$%^&*()].*")) score++;  // special char
+        
+        switch (score) {
+            case 0: case 1: return "Very Weak";
+            case 2: return "Weak";
+            case 3: return "Medium";
+            case 4: return "Strong";
+            case 5: return "Very Strong";
+            default: return "Unknown";
+        }
+    }
+    
+    public static void analyzeText(String text) {
+        System.out.println("\n--- TEXT ANALYSIS ---");
+        System.out.println("Text: " + text);
+        
+        // Basic statistics
+        int charCount = text.length();
+        int wordCount = text.trim().isEmpty() ? 0 : text.trim().split("\\s+").length;
+        int sentenceCount = text.split("[.!?]+").length;
+        
+        // Character frequency
+        Map<Character, Integer> charFreq = new HashMap<>();
+        for (char c : text.toLowerCase().toCharArray()) {
+            if (Character.isLetter(c)) {
+                charFreq.put(c, charFreq.getOrDefault(c, 0) + 1);
+            }
+        }
+        
+        System.out.println("Characters: " + charCount);
+        System.out.println("Words: " + wordCount);
+        System.out.println("Sentences: " + sentenceCount);
+        System.out.println("Average words per sentence: " + (wordCount / (double) sentenceCount));
+        
+        // Most frequent character
+        char mostFreqChar = charFreq.entrySet().stream()
+            .max(Map.Entry.comparingByValue())
+            .map(Map.Entry::getKey)
+            .orElse(' ');
+        System.out.println("Most frequent letter: " + mostFreqChar + 
+                          " (" + charFreq.get(mostFreqChar) + " times)");
+    }
+}
 ```
 
 ## Key Takeaways
 
-1. **Strings are immutable** - methods return new strings
+1. **Strings are immutable** - any modification creates a new string
 2. **Use equals()** for content comparison, not ==
-3. **Handle null values** safely in string operations
-4. **Use StringBuilder** for multiple concatenations
-5. **String literals** are stored in string pool for efficiency
-6. **Case matters** in string operations unless using ignore-case methods
-7. **Validate user input** using string methods
-8. **Index starts at 0** and goes to length()-1
-9. **Many string methods** return new strings, don't modify original
-10. **Choose appropriate method** for each string operation need
+3. **String pool optimizes memory** for string literals
+4. **StringBuilder is efficient** for multiple concatenations
+5. **Rich API provides many utilities** for string manipulation
+6. **Always check for null** before string operations
+7. **Use appropriate methods** for case-sensitive vs case-insensitive operations
+8. **Regular expressions** (regex) provide powerful pattern matching
+9. **Text blocks (Java 15+)** make multi-line strings easier
+10. **Consider performance** when doing many string operations
+
+---
+
+*Remember: Strings are the building blocks of text processing - master them to handle any text-based challenge in Java!*

@@ -1,668 +1,433 @@
-# Java Arrays - Storing Multiple Values
+# Arrays in Java - Organized Storage
 
-## What are Arrays?
+## Simple Explanation
 
-An array is like a **row of boxes** where each box can store one value of the same type. Think of it as:
-- **A bookshelf** where each shelf holds one book
-- **A parking lot** where each spot holds one car
-- **An apartment building** where each unit has the same layout
+Think of an **array** as a **row of numbered boxes** (like gym lockers):
+- Each **box has a number** (index starting from 0)
+- All boxes are **the same size** (same data type)
+- You can **put one item** in each box
+- You can **quickly find any item** by its box number
 
+### Real-World Analogies
+- **Apartment building** = Array (multiple units of same type)
+- **Parking lot** = Array (numbered parking spaces)
+- **Book shelf** = Array (books arranged in order)
+- **Egg carton** = Array (fixed slots for eggs)
+
+## Professional Definition
+
+An **Array** is a data structure that stores multiple elements of the same data type in a contiguous memory location. Each element can be accessed using an index, which represents the position of the element in the array.
+
+## Array Characteristics
+
+### Key Properties:
+- **Homogeneous**: All elements must be of same data type
+- **Fixed Size**: Size is determined at creation and cannot be changed
+- **Indexed**: Elements accessed using index (0 to length-1)
+- **Contiguous Memory**: Elements stored in consecutive memory locations
+- **Random Access**: Direct access to any element using index
+
+### Visual Representation:
 ```
-Array: [10, 20, 30, 40, 50]
-Index:  0   1   2   3   4
+Array: numbers = [10, 20, 30, 40, 50]
+
+Index:    0   1   2   3   4
+        ┌───┬───┬───┬───┬───┐
+Value:  │10 │20 │30 │40 │50 │
+        └───┴───┴───┴───┴───┘
+Memory: 1001 1005 1009 1013 1017
 ```
-
-Each box has:
-- **A number (index)** starting from 0
-- **A value** of the same data type
-- **Fixed size** that cannot change
-
-## Why Use Arrays?
-
-Instead of creating separate variables:
-```java
-// ✗ Tedious way
-int student1Score = 85;
-int student2Score = 92;
-int student3Score = 78;
-int student4Score = 96;
-int student5Score = 88;
-```
-
-Use an array:
-```java
-// ✓ Better way
-int[] studentScores = {85, 92, 78, 96, 88};
-```
-
----
 
 ## Array Declaration and Initialization
 
-### Method 1: Declare then Initialize
+### 1. Declaration Syntax
 ```java
-public class ArrayBasics {
-    public static void main(String[] args) {
-        // Declare array (creates space for 5 integers)
-        int[] numbers = new int[5];
-        
-        // Initialize individual elements
-        numbers[0] = 10;
-        numbers[1] = 20;
-        numbers[2] = 30;
-        numbers[3] = 40;
-        numbers[4] = 50;
-        
-        // Print all elements
-        System.out.println("Array elements:");
-        for (int i = 0; i < numbers.length; i++) {
-            System.out.println("Index " + i + ": " + numbers[i]);
-        }
-    }
-}
+// Method 1: dataType[] arrayName;
+int[] numbers;
+String[] names;
+double[] prices;
+
+// Method 2: dataType arrayName[];
+int numbers[];
+String names[];
+double prices[];
 ```
 
-### Method 2: Declare and Initialize Together
+### 2. Memory Allocation
 ```java
-public class ArrayInitialization {
-    public static void main(String[] args) {
-        // Method 1: Using curly braces
-        int[] scores = {95, 87, 92, 78, 85};
-        
-        // Method 2: Using new keyword
-        String[] names = new String[]{"Alice", "Bob", "Charlie", "Diana"};
-        
-        // Method 3: Mixed declaration
-        double[] prices = new double[]{19.99, 29.99, 39.99, 49.99};
-        
-        System.out.println("Scores length: " + scores.length);
-        System.out.println("Names length: " + names.length);
-        System.out.println("Prices length: " + prices.length);
-    }
-}
+// Allocate memory for specific size
+numbers = new int[5];        // Creates array of 5 integers
+names = new String[3];       // Creates array of 3 strings
+prices = new double[10];     // Creates array of 10 doubles
 ```
 
-## Array Types and Examples
-
-### Integer Arrays
+### 3. Declaration with Initialization
 ```java
-public class IntegerArrays {
-    public static void main(String[] args) {
-        // Student ages in a class
-        int[] ages = {18, 19, 18, 20, 19, 18, 21};
-        
-        // Find average age
-        int sum = 0;
-        for (int age : ages) {
-            sum += age;
-        }
-        double averageAge = (double) sum / ages.length;
-        
-        System.out.println("Total students: " + ages.length);
-        System.out.println("Average age: " + String.format("%.1f", averageAge));
-        
-        // Find youngest and oldest
-        int youngest = ages[0];
-        int oldest = ages[0];
-        
-        for (int age : ages) {
-            if (age < youngest) youngest = age;
-            if (age > oldest) oldest = age;
-        }
-        
-        System.out.println("Youngest: " + youngest);
-        System.out.println("Oldest: " + oldest);
-    }
-}
+// Method 1: Declare, allocate, and initialize separately
+int[] scores = new int[5];
+scores[0] = 85;
+scores[1] = 92;
+scores[2] = 78;
+scores[3] = 96;
+scores[4] = 88;
+
+// Method 2: Declare and initialize together
+int[] numbers = {10, 20, 30, 40, 50};
+String[] fruits = {"apple", "banana", "orange"};
+double[] prices = {19.99, 25.50, 12.75};
+
+// Method 3: Using new keyword with values
+int[] ages = new int[]{25, 30, 35, 40};
+String[] colors = new String[]{"red", "blue", "green"};
 ```
 
-### String Arrays
+## Accessing Array Elements
+
+### Index-Based Access
 ```java
-public class StringArrays {
-    public static void main(String[] args) {
-        // Days of the week
-        String[] daysOfWeek = {
-            "Monday", "Tuesday", "Wednesday", "Thursday", 
-            "Friday", "Saturday", "Sunday"
-        };
-        
-        // Print weekdays vs weekends
-        System.out.println("Weekdays:");
-        for (int i = 0; i < 5; i++) {
-            System.out.println("- " + daysOfWeek[i]);
-        }
-        
-        System.out.println("\nWeekend:");
-        for (int i = 5; i < daysOfWeek.length; i++) {
-            System.out.println("- " + daysOfWeek[i]);
-        }
-        
-        // Find a specific day
-        String targetDay = "Friday";
-        int dayIndex = -1;
-        
-        for (int i = 0; i < daysOfWeek.length; i++) {
-            if (daysOfWeek[i].equals(targetDay)) {
-                dayIndex = i;
-                break;
-            }
-        }
-        
-        if (dayIndex != -1) {
-            System.out.println("\n" + targetDay + " is day number " + (dayIndex + 1));
-        }
-    }
-}
+int[] numbers = {10, 20, 30, 40, 50};
+
+// Reading values
+int firstNumber = numbers[0];    // firstNumber = 10
+int thirdNumber = numbers[2];    // thirdNumber = 30
+int lastNumber = numbers[4];     // lastNumber = 50
+
+// Modifying values
+numbers[1] = 25;                 // Changes 20 to 25
+numbers[3] = 45;                 // Changes 40 to 45
+
+System.out.println("First: " + numbers[0]);      // First: 10
+System.out.println("Modified: " + numbers[1]);   // Modified: 25
 ```
 
-### Double Arrays
+### Array Length Property
 ```java
-public class DoubleArrays {
-    public static void main(String[] args) {
-        // Monthly temperatures (Celsius)
-        double[] monthlyTemps = {2.5, 5.1, 12.3, 18.7, 24.2, 28.9, 
-                                31.4, 30.8, 26.1, 19.3, 11.7, 4.8};
-        
-        String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-        
-        System.out.println("Monthly Temperature Report:");
-        System.out.println("Month\tTemp (°C)\tCategory");
-        System.out.println("--------------------------------");
-        
-        double totalTemp = 0;
-        
-        for (int i = 0; i < monthlyTemps.length; i++) {
-            double temp = monthlyTemps[i];
-            totalTemp += temp;
-            
-            String category;
-            if (temp < 0) {
-                category = "Freezing";
-            } else if (temp < 10) {
-                category = "Cold";
-            } else if (temp < 20) {
-                category = "Cool";
-            } else if (temp < 30) {
-                category = "Warm";
-            } else {
-                category = "Hot";
-            }
-            
-            System.out.printf("%s\t%.1f°C\t\t%s\n", months[i], temp, category);
-        }
-        
-        double averageTemp = totalTemp / monthlyTemps.length;
-        System.out.printf("\nAverage yearly temperature: %.1f°C\n", averageTemp);
-    }
+int[] scores = {85, 92, 78, 96, 88};
+
+// Get array length
+int arraySize = scores.length;   // arraySize = 5
+
+// Access last element safely
+int lastScore = scores[scores.length - 1];  // lastScore = 88
+
+// Avoid index out of bounds
+for (int i = 0; i < scores.length; i++) {
+    System.out.println("Score " + (i + 1) + ": " + scores[i]);
 }
 ```
-
----
 
 ## Array Operations
 
-### 1. Accessing Elements
+### 1. Iterating Through Arrays
+
+#### Using Traditional for Loop
 ```java
-public class ArrayAccess {
-    public static void main(String[] args) {
-        String[] colors = {"Red", "Green", "Blue", "Yellow", "Purple"};
-        
-        // Access individual elements
-        System.out.println("First color: " + colors[0]);
-        System.out.println("Last color: " + colors[colors.length - 1]);
-        System.out.println("Middle color: " + colors[colors.length / 2]);
-        
-        // Safe access with bounds checking
-        int index = 10;
-        if (index >= 0 && index < colors.length) {
-            System.out.println("Color at index " + index + ": " + colors[index]);
-        } else {
-            System.out.println("Index " + index + " is out of bounds!");
-        }
+String[] subjects = {"Math", "Science", "English", "History"};
+
+// Print all subjects with index
+for (int i = 0; i < subjects.length; i++) {
+    System.out.println("Subject " + (i + 1) + ": " + subjects[i]);
+}
+
+// Find specific element
+String searchSubject = "Science";
+boolean found = false;
+
+for (int i = 0; i < subjects.length; i++) {
+    if (subjects[i].equals(searchSubject)) {
+        System.out.println(searchSubject + " found at index " + i);
+        found = true;
+        break;
     }
+}
+
+if (!found) {
+    System.out.println(searchSubject + " not found!");
 }
 ```
 
-### 2. Modifying Elements
+#### Using Enhanced for Loop
 ```java
-public class ArrayModification {
-    public static void main(String[] args) {
-        int[] inventory = {50, 30, 45, 20, 60};
-        String[] items = {"Laptops", "Mice", "Keyboards", "Monitors", "Speakers"};
-        
-        System.out.println("Initial Inventory:");
-        printInventory(items, inventory);
-        
-        // Simulate sales
-        inventory[0] -= 5;  // Sold 5 laptops
-        inventory[1] -= 10; // Sold 10 mice
-        inventory[4] -= 3;  // Sold 3 speakers
-        
-        System.out.println("\nAfter Sales:");
-        printInventory(items, inventory);
-        
-        // Restock items
-        inventory[0] += 20; // Restocked laptops
-        inventory[3] += 15; // Restocked monitors
-        
-        System.out.println("\nAfter Restocking:");
-        printInventory(items, inventory);
+double[] temperatures = {98.6, 99.2, 97.8, 100.1, 98.9};
+
+// Print all temperatures
+for (double temp : temperatures) {
+    System.out.println("Temperature: " + temp + "°F");
+}
+
+// Calculate average
+double sum = 0;
+for (double temp : temperatures) {
+    sum += temp;
+}
+double average = sum / temperatures.length;
+System.out.println("Average temperature: " + average + "°F");
+```
+
+### 2. Common Array Operations
+
+#### Finding Maximum and Minimum
+```java
+int[] numbers = {45, 23, 78, 12, 67, 89, 34};
+
+// Find maximum
+int max = numbers[0];
+for (int i = 1; i < numbers.length; i++) {
+    if (numbers[i] > max) {
+        max = numbers[i];
     }
-    
-    // Helper method to print inventory
-    public static void printInventory(String[] items, int[] quantities) {
-        for (int i = 0; i < items.length; i++) {
-            System.out.println(items[i] + ": " + quantities[i] + " units");
-        }
+}
+System.out.println("Maximum: " + max);
+
+// Find minimum
+int min = numbers[0];
+for (int i = 1; i < numbers.length; i++) {
+    if (numbers[i] < min) {
+        min = numbers[i];
     }
+}
+System.out.println("Minimum: " + min);
+```
+
+#### Searching for Element
+```java
+int[] scores = {85, 92, 78, 96, 88, 91, 83};
+int targetScore = 96;
+int foundIndex = -1;
+
+// Linear search
+for (int i = 0; i < scores.length; i++) {
+    if (scores[i] == targetScore) {
+        foundIndex = i;
+        break;
+    }
+}
+
+if (foundIndex != -1) {
+    System.out.println("Score " + targetScore + " found at position " + (foundIndex + 1));
+} else {
+    System.out.println("Score " + targetScore + " not found!");
 }
 ```
 
-### 3. Searching Arrays
+#### Copying Arrays
 ```java
-public class ArraySearching {
-    public static void main(String[] args) {
-        int[] studentIds = {1001, 1005, 1003, 1008, 1002, 1007, 1004};
-        String[] studentNames = {"Alice", "Bob", "Charlie", "Diana", "Eve", "Frank", "Grace"};
-        
-        // Linear search for student
-        int searchId = 1005;
-        int foundIndex = -1;
-        
-        for (int i = 0; i < studentIds.length; i++) {
-            if (studentIds[i] == searchId) {
-                foundIndex = i;
-                break;
-            }
-        }
-        
-        if (foundIndex != -1) {
-            System.out.println("Student found!");
-            System.out.println("ID: " + searchId);
-            System.out.println("Name: " + studentNames[foundIndex]);
-            System.out.println("Position in array: " + foundIndex);
-        } else {
-            System.out.println("Student with ID " + searchId + " not found.");
-        }
-        
-        // Search for multiple students
-        int[] searchIds = {1008, 1010, 1002};
-        
-        System.out.println("\nSearching for multiple students:");
-        for (int id : searchIds) {
-            boolean found = false;
-            for (int i = 0; i < studentIds.length; i++) {
-                if (studentIds[i] == id) {
-                    System.out.println("✓ Found: " + studentNames[i] + " (ID: " + id + ")");
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                System.out.println("✗ Not found: ID " + id);
-            }
-        }
+int[] original = {1, 2, 3, 4, 5};
+
+// Method 1: Manual copying
+int[] copy1 = new int[original.length];
+for (int i = 0; i < original.length; i++) {
+    copy1[i] = original[i];
+}
+
+// Method 2: Using System.arraycopy()
+int[] copy2 = new int[original.length];
+System.arraycopy(original, 0, copy2, 0, original.length);
+
+// Method 3: Using Arrays.copyOf()
+import java.util.Arrays;
+int[] copy3 = Arrays.copyOf(original, original.length);
+
+// Verify copies
+System.out.println("Original: " + Arrays.toString(original));
+System.out.println("Copy 1: " + Arrays.toString(copy1));
+System.out.println("Copy 2: " + Arrays.toString(copy2));
+System.out.println("Copy 3: " + Arrays.toString(copy3));
+```
+
+## Multi-Dimensional Arrays
+
+### 2D Arrays (Arrays of Arrays)
+
+#### Simple Explanation
+**2D Array** is like a **table** or **grid** - rows and columns of data.
+
+#### Declaration and Initialization
+```java
+// Declaration
+int[][] matrix;
+String[][] table;
+
+// Memory allocation
+matrix = new int[3][4];      // 3 rows, 4 columns
+table = new String[2][3];    // 2 rows, 3 columns
+
+// Declaration with initialization
+int[][] numbers = {
+    {1, 2, 3, 4},
+    {5, 6, 7, 8},
+    {9, 10, 11, 12}
+};
+
+// Visual representation:
+//     Col0 Col1 Col2 Col3
+// Row0  1    2    3    4
+// Row1  5    6    7    8
+// Row2  9   10   11   12
+```
+
+#### Accessing 2D Array Elements
+```java
+int[][] matrix = {
+    {10, 20, 30},
+    {40, 50, 60},
+    {70, 80, 90}
+};
+
+// Access individual elements
+int element = matrix[1][2];    // element = 60 (row 1, column 2)
+
+// Modify elements
+matrix[0][1] = 25;             // Changes 20 to 25
+
+// Get dimensions
+int rows = matrix.length;           // rows = 3
+int columns = matrix[0].length;     // columns = 3
+```
+
+#### Iterating Through 2D Arrays
+```java
+int[][] scores = {
+    {85, 92, 78},
+    {96, 88, 91},
+    {83, 79, 94}
+};
+
+// Using nested for loops
+System.out.println("Student Scores:");
+for (int i = 0; i < scores.length; i++) {
+    System.out.print("Student " + (i + 1) + ": ");
+    for (int j = 0; j < scores[i].length; j++) {
+        System.out.print(scores[i][j] + " ");
     }
+    System.out.println();
+}
+
+// Using enhanced for loops
+System.out.println("\nScores with enhanced for:");
+int studentNum = 1;
+for (int[] studentScores : scores) {
+    System.out.print("Student " + studentNum++ + ": ");
+    for (int score : studentScores) {
+        System.out.print(score + " ");
+    }
+    System.out.println();
 }
 ```
 
-### 4. Sorting Arrays
+### 3D Arrays and Beyond
 ```java
-public class ArraySorting {
-    public static void main(String[] args) {
-        int[] scores = {85, 92, 78, 96, 88, 73, 91, 87};
-        
-        System.out.println("Original scores:");
-        printArray(scores);
-        
-        // Simple bubble sort (ascending order)
-        for (int i = 0; i < scores.length - 1; i++) {
-            for (int j = 0; j < scores.length - 1 - i; j++) {
-                if (scores[j] > scores[j + 1]) {
-                    // Swap elements
-                    int temp = scores[j];
-                    scores[j] = scores[j + 1];
-                    scores[j + 1] = temp;
-                }
-            }
-        }
-        
-        System.out.println("Sorted scores (ascending):");
-        printArray(scores);
-        
-        // Find ranks
-        System.out.println("\nRanks (highest score = rank 1):");
-        for (int i = scores.length - 1; i >= 0; i--) {
-            int rank = scores.length - i;
-            System.out.println("Rank " + rank + ": " + scores[i] + " points");
-        }
+// 3D Array: Think of it as a cube or multiple 2D arrays
+int[][][] cube = new int[2][3][4];  // 2 layers, 3 rows, 4 columns
+
+// Initialize with values
+int[][][] data = {
+    {
+        {1, 2, 3},
+        {4, 5, 6}
+    },
+    {
+        {7, 8, 9},
+        {10, 11, 12}
     }
-    
-    public static void printArray(int[] arr) {
-        for (int value : arr) {
-            System.out.print(value + " ");
-        }
-        System.out.println();
-    }
-}
+};
+
+// Access element
+int value = data[1][0][2];  // value = 9 (layer 1, row 0, column 2)
 ```
 
----
+## Common Array Utilities (java.util.Arrays)
 
-## Multidimensional Arrays
-
-### 2D Arrays (Tables)
-
-A 2D array is like a **table** with rows and columns:
-
-```java
-public class TwoDArrays {
-    public static void main(String[] args) {
-        // Seating arrangement in a classroom (3 rows, 4 seats each)
-        String[][] seatingChart = {
-            {"Alice", "Bob", "Charlie", "Diana"},
-            {"Eve", "Frank", "Grace", "Henry"},
-            {"Ivy", "Jack", "Kate", "Liam"}
-        };
-        
-        System.out.println("Classroom Seating Chart:");
-        System.out.println("========================");
-        
-        for (int row = 0; row < seatingChart.length; row++) {
-            System.out.print("Row " + (row + 1) + ": ");
-            for (int col = 0; col < seatingChart[row].length; col++) {
-                System.out.print(seatingChart[row][col] + "\t");
-            }
-            System.out.println();
-        }
-        
-        // Find student position
-        String searchStudent = "Grace";
-        boolean found = false;
-        
-        for (int row = 0; row < seatingChart.length; row++) {
-            for (int col = 0; col < seatingChart[row].length; col++) {
-                if (seatingChart[row][col].equals(searchStudent)) {
-                    System.out.println("\n" + searchStudent + " sits in Row " + 
-                                     (row + 1) + ", Seat " + (col + 1));
-                    found = true;
-                    break;
-                }
-            }
-            if (found) break;
-        }
-    }
-}
-```
-
-### Matrix Operations
-```java
-public class MatrixOperations {
-    public static void main(String[] args) {
-        // Grade matrix (students × subjects)
-        int[][] grades = {
-            {85, 92, 78, 88}, // Alice: Math, English, Science, History
-            {91, 87, 95, 82}, // Bob
-            {78, 89, 84, 91}, // Charlie
-            {94, 85, 91, 87}  // Diana
-        };
-        
-        String[] students = {"Alice", "Bob", "Charlie", "Diana"};
-        String[] subjects = {"Math", "English", "Science", "History"};
-        
-        System.out.println("Grade Report:");
-        System.out.println("=============");
-        
-        // Print grade table
-        System.out.print("Student\t\t");
-        for (String subject : subjects) {
-            System.out.print(subject + "\t");
-        }
-        System.out.println("Average");
-        
-        for (int i = 0; i < students.length; i++) {
-            System.out.print(students[i] + "\t\t");
-            
-            int sum = 0;
-            for (int j = 0; j < grades[i].length; j++) {
-                System.out.print(grades[i][j] + "\t");
-                sum += grades[i][j];
-            }
-            
-            double average = (double) sum / grades[i].length;
-            System.out.printf("%.1f\n", average);
-        }
-        
-        // Calculate subject averages
-        System.out.println("\nSubject Averages:");
-        for (int j = 0; j < subjects.length; j++) {
-            int sum = 0;
-            for (int i = 0; i < students.length; i++) {
-                sum += grades[i][j];
-            }
-            double average = (double) sum / students.length;
-            System.out.printf("%s: %.1f\n", subjects[j], average);
-        }
-    }
-}
-```
-
----
-
-## Array Utility Methods (java.util.Arrays)
-
+### Useful Array Methods
 ```java
 import java.util.Arrays;
 
-public class ArrayUtilities {
-    public static void main(String[] args) {
-        int[] numbers = {64, 34, 25, 12, 22, 11, 90};
-        int[] copy = {64, 34, 25, 12, 22, 11, 90};
-        
-        System.out.println("Original array: " + Arrays.toString(numbers));
-        
-        // Sort array
-        Arrays.sort(numbers);
-        System.out.println("Sorted array: " + Arrays.toString(numbers));
-        
-        // Binary search (array must be sorted)
-        int searchValue = 25;
-        int index = Arrays.binarySearch(numbers, searchValue);
-        System.out.println("Index of " + searchValue + ": " + index);
-        
-        // Fill array with value
-        int[] filled = new int[5];
-        Arrays.fill(filled, 42);
-        System.out.println("Filled array: " + Arrays.toString(filled));
-        
-        // Copy array
-        int[] copied = Arrays.copyOf(copy, copy.length);
-        System.out.println("Copied array: " + Arrays.toString(copied));
-        
-        // Copy range
-        int[] range = Arrays.copyOfRange(copy, 2, 5);
-        System.out.println("Range copy (index 2-4): " + Arrays.toString(range));
-        
-        // Compare arrays
-        boolean areEqual = Arrays.equals(copy, copied);
-        System.out.println("Arrays are equal: " + areEqual);
-    }
-}
+int[] numbers = {45, 23, 78, 12, 67};
+
+// 1. Convert array to string for printing
+System.out.println("Array: " + Arrays.toString(numbers));
+
+// 2. Sort array
+Arrays.sort(numbers);
+System.out.println("Sorted: " + Arrays.toString(numbers));
+
+// 3. Binary search (only works on sorted arrays)
+int index = Arrays.binarySearch(numbers, 45);
+System.out.println("45 found at index: " + index);
+
+// 4. Fill array with specific value
+int[] filled = new int[5];
+Arrays.fill(filled, 10);
+System.out.println("Filled: " + Arrays.toString(filled));
+
+// 5. Compare arrays
+int[] arr1 = {1, 2, 3};
+int[] arr2 = {1, 2, 3};
+boolean areEqual = Arrays.equals(arr1, arr2);
+System.out.println("Arrays equal: " + areEqual);
+
+// 6. Copy array with different size
+int[] original = {1, 2, 3, 4, 5};
+int[] extended = Arrays.copyOf(original, 8);  // Size 8
+System.out.println("Extended: " + Arrays.toString(extended));
+
+int[] truncated = Arrays.copyOf(original, 3);  // Size 3
+System.out.println("Truncated: " + Arrays.toString(truncated));
 ```
 
----
+## Array vs ArrayList Comparison
 
-## Real-World Applications
+| Feature | Array | ArrayList |
+|---------|-------|-----------|
+| **Size** | Fixed | Dynamic |
+| **Memory** | Efficient | More overhead |
+| **Performance** | Faster access | Slightly slower |
+| **Data Type** | Primitives + Objects | Objects only |
+| **Methods** | Limited | Many built-in methods |
+| **Syntax** | `arr[index]` | `list.get(index)` |
 
-### 1. Student Management System
 ```java
-public class StudentManagementSystem {
-    public static void main(String[] args) {
-        // Student data
-        String[] studentNames = {"Alice Johnson", "Bob Smith", "Charlie Brown", 
-                                "Diana Prince", "Eve Adams"};
-        int[] studentIds = {1001, 1002, 1003, 1004, 1005};
-        double[] gpas = {3.85, 3.67, 3.92, 3.74, 3.88};
-        boolean[] isActive = {true, true, false, true, true};
-        
-        System.out.println("=== Student Management System ===\n");
-        
-        // Display all students
-        System.out.println("All Students:");
-        System.out.println("ID\tName\t\t\tGPA\tStatus");
-        System.out.println("------------------------------------------------");
-        
-        for (int i = 0; i < studentNames.length; i++) {
-            String status = isActive[i] ? "Active" : "Inactive";
-            System.out.printf("%d\t%-20s\t%.2f\t%s\n", 
-                            studentIds[i], studentNames[i], gpas[i], status);
-        }
-        
-        // Find honor roll students (GPA >= 3.8)
-        System.out.println("\nHonor Roll Students (GPA >= 3.8):");
-        for (int i = 0; i < studentNames.length; i++) {
-            if (gpas[i] >= 3.8 && isActive[i]) {
-                System.out.println("• " + studentNames[i] + " (GPA: " + gpas[i] + ")");
-            }
-        }
-        
-        // Calculate average GPA
-        double totalGpa = 0;
-        int activeCount = 0;
-        
-        for (int i = 0; i < gpas.length; i++) {
-            if (isActive[i]) {
-                totalGpa += gpas[i];
-                activeCount++;
-            }
-        }
-        
-        double averageGpa = totalGpa / activeCount;
-        System.out.printf("\nAverage GPA (active students): %.2f\n", averageGpa);
-        
-        // Find student with highest GPA
-        double highestGpa = 0;
-        String topStudent = "";
-        
-        for (int i = 0; i < gpas.length; i++) {
-            if (isActive[i] && gpas[i] > highestGpa) {
-                highestGpa = gpas[i];
-                topStudent = studentNames[i];
-            }
-        }
-        
-        System.out.println("Top Student: " + topStudent + " (GPA: " + highestGpa + ")");
-    }
-}
+// Array example
+int[] array = new int[5];
+array[0] = 10;
+int value = array[0];
+
+// ArrayList example
+import java.util.ArrayList;
+ArrayList<Integer> list = new ArrayList<>();
+list.add(10);
+int value2 = list.get(0);
 ```
 
-### 2. Sales Analytics System
-```java
-public class SalesAnalytics {
-    public static void main(String[] args) {
-        // Monthly sales data for different products
-        String[] products = {"Laptops", "Phones", "Tablets", "Accessories"};
-        double[][] monthlySales = {
-            {45000, 52000, 48000, 55000, 62000, 58000}, // Laptops (6 months)
-            {78000, 85000, 72000, 89000, 95000, 82000}, // Phones
-            {25000, 28000, 22000, 30000, 35000, 31000}, // Tablets  
-            {12000, 15000, 18000, 16000, 19000, 21000}  // Accessories
-        };
-        
-        String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun"};
-        
-        System.out.println("=== Sales Analytics Dashboard ===\n");
-        
-        // Display sales table
-        System.out.print("Product\t\t");
-        for (String month : months) {
-            System.out.print(month + "\t");
-        }
-        System.out.println("Total\t\tAverage");
-        System.out.println("-----------------------------------------------------------------------");
-        
-        double grandTotal = 0;
-        
-        for (int i = 0; i < products.length; i++) {
-            System.out.printf("%-12s\t", products[i]);
-            
-            double productTotal = 0;
-            for (int j = 0; j < monthlySales[i].length; j++) {
-                System.out.printf("%.0f\t", monthlySales[i][j]);
-                productTotal += monthlySales[i][j];
-            }
-            
-            double productAverage = productTotal / monthlySales[i].length;
-            System.out.printf("%.0f\t\t%.0f\n", productTotal, productAverage);
-            grandTotal += productTotal;
-        }
-        
-        System.out.println("-----------------------------------------------------------------------");
-        System.out.printf("GRAND TOTAL: $%.0f\n", grandTotal);
-        
-        // Monthly totals
-        System.out.println("\nMonthly Performance:");
-        for (int j = 0; j < months.length; j++) {
-            double monthTotal = 0;
-            for (int i = 0; i < products.length; i++) {
-                monthTotal += monthlySales[i][j];
-            }
-            System.out.printf("%s: $%.0f\n", months[j], monthTotal);
-        }
-        
-        // Best performing product
-        double maxProductSales = 0;
-        String bestProduct = "";
-        
-        for (int i = 0; i < products.length; i++) {
-            double productTotal = 0;
-            for (int j = 0; j < monthlySales[i].length; j++) {
-                productTotal += monthlySales[i][j];
-            }
-            
-            if (productTotal > maxProductSales) {
-                maxProductSales = productTotal;
-                bestProduct = products[i];
-            }
-        }
-        
-        System.out.printf("\nBest Performing Product: %s ($%.0f)\n", 
-                         bestProduct, maxProductSales);
-    }
-}
-```
-
----
-
-## Common Mistakes and Solutions
+## Common Array Problems and Solutions
 
 ### 1. Array Index Out of Bounds
 ```java
-// ✗ WRONG
-int[] numbers = {1, 2, 3, 4, 5};
-System.out.println(numbers[5]); // ERROR! Index 5 doesn't exist
+int[] numbers = {10, 20, 30};
 
-// ✓ CORRECT - Always check bounds
+// Wrong - will throw ArrayIndexOutOfBoundsException
+// System.out.println(numbers[5]);
+
+// Correct - check bounds
+int index = 5;
 if (index >= 0 && index < numbers.length) {
     System.out.println(numbers[index]);
 } else {
-    System.out.println("Invalid index!");
+    System.out.println("Index out of bounds!");
 }
 ```
 
-### 2. Not Initializing Array Elements
+### 2. Null Pointer Exception
 ```java
-// ✗ WRONG - Array has default values (0 for int)
-int[] scores = new int[5];
-// scores contains: [0, 0, 0, 0, 0]
+// Wrong - array reference is null
+int[] numbers = null;
+// System.out.println(numbers.length);  // NullPointerException
 
-// ✓ CORRECT - Initialize with meaningful values
-int[] scores = {85, 92, 78, 96, 88};
-// or
-int[] scores = new int[5];
-for (int i = 0; i < scores.length; i++) {
-    scores[i] = getScoreFromUser(); // Get actual scores
+// Correct - check for null
+if (numbers != null) {
+    System.out.println("Length: " + numbers.length);
+} else {
+    System.out.println("Array is null!");
 }
 ```
 
@@ -671,158 +436,352 @@ for (int i = 0; i < scores.length; i++) {
 int[] arr1 = {1, 2, 3};
 int[] arr2 = {1, 2, 3};
 
-// ✗ WRONG - Compares references, not content
-if (arr1 == arr2) { // Always false!
-    System.out.println("Arrays are equal");
-}
+// Wrong - compares references, not content
+// boolean equal = (arr1 == arr2);  // false
 
-// ✓ CORRECT - Use Arrays.equals()
+// Correct - use Arrays.equals()
+boolean equal = Arrays.equals(arr1, arr2);  // true
+```
+
+## Interview Questions & Answers
+
+**Q1: What is the difference between array and ArrayList?**
+**A:**
+- **Array**: Fixed size, can store primitives, faster access, less memory overhead
+- **ArrayList**: Dynamic size, stores objects only, more methods, automatic resizing
+
+**Q2: How do you find the length of an array?**
+**A:** Use the `length` property: `arrayName.length` (note: no parentheses, it's a property not a method)
+
+**Q3: What happens if you access an array with invalid index?**
+**A:** Throws `ArrayIndexOutOfBoundsException` at runtime. Always check bounds before accessing.
+
+**Q4: Can you change the size of an array after creation?**
+**A:** No, array size is fixed. You need to create a new array with different size and copy elements if needed.
+
+**Q5: What is a 2D array and how do you access elements?**
+**A:** 2D array is array of arrays. Access using `arr[row][column]` notation. Example: `matrix[2][3]` accesses element at row 2, column 3.
+
+**Q6: How do you copy an array?**
+**A:** 
+- Manual loop
+- `System.arraycopy()`
+- `Arrays.copyOf()`
+- `clone()` method
+
+## Complete Example Program
+
+```java
 import java.util.Arrays;
-if (Arrays.equals(arr1, arr2)) {
-    System.out.println("Arrays are equal");
-}
-```
+import java.util.Scanner;
 
-### 4. Modifying Array Size
-```java
-// ✗ WRONG - Cannot change array size
-int[] numbers = {1, 2, 3};
-numbers = new int[5]; // This creates a NEW array, loses old data
-
-// ✓ CORRECT - Use ArrayList for dynamic size
-import java.util.ArrayList;
-ArrayList<Integer> numbers = new ArrayList<>();
-numbers.add(1);
-numbers.add(2);
-numbers.add(3);
-numbers.add(4); // Can add as many as needed
-```
-
-## Practice Exercises
-
-### Exercise 1: Grade Calculator
-```java
-public class GradeCalculator {
+/**
+ * Comprehensive array demonstration program
+ */
+public class ArraysExample {
+    
     public static void main(String[] args) {
-        // Create arrays for student names and their test scores
-        String[] students = {"Alice", "Bob", "Charlie", "Diana", "Eve"};
-        int[][] testScores = {
-            {85, 92, 78, 88, 91}, // Alice's 5 test scores
-            {79, 85, 88, 92, 87}, // Bob's scores
-            {92, 89, 95, 91, 93}, // Charlie's scores
-            {78, 82, 85, 79, 81}, // Diana's scores
-            {88, 91, 89, 94, 90}  // Eve's scores
+        // Demonstrate basic array operations
+        demonstrateBasicArrays();
+        
+        // Demonstrate 2D arrays
+        demonstrate2DArrays();
+        
+        // Demonstrate array utilities
+        demonstrateArrayUtilities();
+        
+        // Interactive array example
+        runGradeCalculator();
+        
+        // Advanced array operations
+        demonstrateAdvancedOperations();
+    }
+    
+    public static void demonstrateBasicArrays() {
+        System.out.println("=== BASIC ARRAYS ===");
+        
+        // Different ways to create arrays
+        int[] numbers = {85, 92, 78, 96, 88};
+        String[] subjects = new String[]{"Math", "Science", "English"};
+        double[] prices = new double[5];
+        
+        // Initialize prices array
+        prices[0] = 19.99;
+        prices[1] = 25.50;
+        prices[2] = 12.75;
+        prices[3] = 8.99;
+        prices[4] = 35.25;
+        
+        // Display arrays
+        System.out.println("Numbers: " + Arrays.toString(numbers));
+        System.out.println("Subjects: " + Arrays.toString(subjects));
+        System.out.println("Prices: " + Arrays.toString(prices));
+        
+        // Array statistics
+        int sum = 0;
+        int max = numbers[0];
+        int min = numbers[0];
+        
+        for (int num : numbers) {
+            sum += num;
+            if (num > max) max = num;
+            if (num < min) min = num;
+        }
+        
+        double average = (double) sum / numbers.length;
+        
+        System.out.println("Sum: " + sum);
+        System.out.println("Average: " + average);
+        System.out.println("Maximum: " + max);
+        System.out.println("Minimum: " + min);
+        System.out.println();
+    }
+    
+    public static void demonstrate2DArrays() {
+        System.out.println("=== 2D ARRAYS ===");
+        
+        // Student grades: 3 students, 4 subjects each
+        int[][] grades = {
+            {85, 92, 78, 96},  // Student 1
+            {88, 84, 91, 89},  // Student 2
+            {79, 95, 87, 93}   // Student 3
         };
         
-        // Calculate:
-        // 1. Each student's average
-        // 2. Each test's average
-        // 3. Overall class average
-        // 4. Highest and lowest individual scores
-        // 5. Student with highest average
-    }
-}
-```
-
-### Exercise 2: Inventory Management
-```java
-public class InventoryManagement {
-    public static void main(String[] args) {
-        // Product data
-        String[] products = {"Laptop", "Mouse", "Keyboard", "Monitor", "Speaker"};
-        int[] quantities = {15, 50, 30, 8, 25};
-        double[] prices = {999.99, 29.99, 79.99, 299.99, 149.99};
+        String[] subjects = {"Math", "Science", "English", "History"};
         
-        // Implement:
-        // 1. Display inventory with total values
-        // 2. Find products below reorder level (< 10 units)
-        // 3. Calculate total inventory value
-        // 4. Sort products by value (price × quantity)
-        // 5. Simulate sales and update quantities
-    }
-}
-```
-
-### Exercise 3: Tic-Tac-Toe Board
-```java
-public class TicTacToe {
-    public static void main(String[] args) {
-        // Create a 3x3 game board
-        char[][] board = {
-            {' ', ' ', ' '},
-            {' ', ' ', ' '},
-            {' ', ' ', ' '}
-        };
+        // Display grade table
+        System.out.printf("%-10s", "Student");
+        for (String subject : subjects) {
+            System.out.printf("%-10s", subject);
+        }
+        System.out.printf("%-10s%n", "Average");
+        System.out.println("-".repeat(60));
         
-        // Implement:
-        // 1. Display the board
-        // 2. Place X's and O's
-        // 3. Check for wins (rows, columns, diagonals)
-        // 4. Check for draw (board full)
-        // 5. Validate moves (position not taken)
+        // Calculate and display grades for each student
+        for (int i = 0; i < grades.length; i++) {
+            System.out.printf("%-10s", "Student " + (i + 1));
+            
+            int sum = 0;
+            for (int j = 0; j < grades[i].length; j++) {
+                System.out.printf("%-10d", grades[i][j]);
+                sum += grades[i][j];
+            }
+            
+            double average = (double) sum / grades[i].length;
+            System.out.printf("%-10.1f%n", average);
+        }
+        
+        // Calculate subject averages
+        System.out.println("-".repeat(60));
+        System.out.printf("%-10s", "Average");
+        for (int j = 0; j < subjects.length; j++) {
+            int sum = 0;
+            for (int i = 0; i < grades.length; i++) {
+                sum += grades[i][j];
+            }
+            double average = (double) sum / grades.length;
+            System.out.printf("%-10.1f", average);
+        }
+        System.out.println();
+        System.out.println();
     }
-}
-```
-
-## Quick Reference
-
-### Array Declaration & Initialization
-```java
-// Declaration
-int[] arr = new int[5];              // Size 5, default values
-String[] names = new String[3];      // Size 3, null values
-
-// Initialization  
-int[] numbers = {1, 2, 3, 4, 5};     // Direct initialization
-String[] colors = new String[]{"Red", "Blue", "Green"};
-
-// 2D Arrays
-int[][] matrix = new int[3][4];      // 3 rows, 4 columns
-int[][] data = {{1,2}, {3,4}, {5,6}}; // Direct initialization
-```
-
-### Common Operations
-```java
-arr.length              // Array size
-arr[index]              // Access element
-arr[index] = value      // Modify element
-
-Arrays.toString(arr)    // Print 1D array
-Arrays.deepToString(arr2D) // Print 2D array
-Arrays.sort(arr)        // Sort array
-Arrays.equals(arr1, arr2)  // Compare arrays
-```
-
-### Loops with Arrays
-```java
-// Traditional for loop
-for (int i = 0; i < arr.length; i++) {
-    System.out.println(arr[i]);
-}
-
-// Enhanced for loop (for-each)
-for (int element : arr) {
-    System.out.println(element);
-}
-
-// 2D array traversal
-for (int i = 0; i < arr2D.length; i++) {
-    for (int j = 0; j < arr2D[i].length; j++) {
-        System.out.print(arr2D[i][j] + " ");
+    
+    public static void demonstrateArrayUtilities() {
+        System.out.println("=== ARRAY UTILITIES ===");
+        
+        int[] original = {45, 23, 78, 12, 67, 89, 34};
+        System.out.println("Original: " + Arrays.toString(original));
+        
+        // Copy array
+        int[] copy = Arrays.copyOf(original, original.length);
+        System.out.println("Copy: " + Arrays.toString(copy));
+        
+        // Sort array (modifies original)
+        Arrays.sort(copy);
+        System.out.println("Sorted: " + Arrays.toString(copy));
+        
+        // Binary search (only works on sorted arrays)
+        int searchValue = 67;
+        int index = Arrays.binarySearch(copy, searchValue);
+        System.out.println("Value " + searchValue + " found at index: " + index);
+        
+        // Fill array
+        int[] filled = new int[5];
+        Arrays.fill(filled, 42);
+        System.out.println("Filled: " + Arrays.toString(filled));
+        
+        // Compare arrays
+        int[] arr1 = {1, 2, 3};
+        int[] arr2 = {1, 2, 3};
+        int[] arr3 = {1, 2, 4};
+        
+        System.out.println("arr1 equals arr2: " + Arrays.equals(arr1, arr2));
+        System.out.println("arr1 equals arr3: " + Arrays.equals(arr1, arr3));
+        System.out.println();
     }
-    System.out.println();
+    
+    public static void runGradeCalculator() {
+        System.out.println("=== INTERACTIVE GRADE CALCULATOR ===");
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter number of students: ");
+        int numStudents = scanner.nextInt();
+        
+        String[] studentNames = new String[numStudents];
+        double[] averages = new double[numStudents];
+        
+        for (int i = 0; i < numStudents; i++) {
+            System.out.print("Enter name for student " + (i + 1) + ": ");
+            studentNames[i] = scanner.next();
+            
+            System.out.print("Enter number of grades for " + studentNames[i] + ": ");
+            int numGrades = scanner.nextInt();
+            
+            double[] grades = new double[numGrades];
+            double sum = 0;
+            
+            for (int j = 0; j < numGrades; j++) {
+                System.out.print("Enter grade " + (j + 1) + ": ");
+                grades[j] = scanner.nextDouble();
+                sum += grades[j];
+            }
+            
+            averages[i] = sum / numGrades;
+            System.out.println(studentNames[i] + "'s average: " + averages[i]);
+            System.out.println();
+        }
+        
+        // Display summary
+        System.out.println("=== GRADE SUMMARY ===");
+        double classTotal = 0;
+        for (int i = 0; i < numStudents; i++) {
+            char letterGrade = calculateLetterGrade(averages[i]);
+            System.out.printf("%-15s: %.1f (%c)%n", studentNames[i], averages[i], letterGrade);
+            classTotal += averages[i];
+        }
+        
+        double classAverage = classTotal / numStudents;
+        System.out.printf("Class Average: %.1f%n", classAverage);
+        System.out.println();
+    }
+    
+    public static char calculateLetterGrade(double average) {
+        if (average >= 90) return 'A';
+        if (average >= 80) return 'B';
+        if (average >= 70) return 'C';
+        if (average >= 60) return 'D';
+        return 'F';
+    }
+    
+    public static void demonstrateAdvancedOperations() {
+        System.out.println("=== ADVANCED ARRAY OPERATIONS ===");
+        
+        int[] numbers = {64, 34, 25, 12, 22, 11, 90};
+        System.out.println("Original: " + Arrays.toString(numbers));
+        
+        // Bubble sort implementation
+        int[] bubbleSorted = Arrays.copyOf(numbers, numbers.length);
+        bubbleSort(bubbleSorted);
+        System.out.println("Bubble Sorted: " + Arrays.toString(bubbleSorted));
+        
+        // Reverse array
+        int[] reversed = Arrays.copyOf(numbers, numbers.length);
+        reverseArray(reversed);
+        System.out.println("Reversed: " + Arrays.toString(reversed));
+        
+        // Find second largest
+        int secondLargest = findSecondLargest(numbers);
+        System.out.println("Second largest: " + secondLargest);
+        
+        // Remove duplicates
+        int[] withDuplicates = {1, 2, 2, 3, 4, 4, 5};
+        int[] unique = removeDuplicates(withDuplicates);
+        System.out.println("With duplicates: " + Arrays.toString(withDuplicates));
+        System.out.println("Unique elements: " + Arrays.toString(unique));
+    }
+    
+    public static void bubbleSort(int[] arr) {
+        int n = arr.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - 1 - i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    // Swap elements
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+    }
+    
+    public static void reverseArray(int[] arr) {
+        int start = 0;
+        int end = arr.length - 1;
+        
+        while (start < end) {
+            int temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
+            start++;
+            end--;
+        }
+    }
+    
+    public static int findSecondLargest(int[] arr) {
+        if (arr.length < 2) return -1;
+        
+        int largest = Integer.MIN_VALUE;
+        int secondLargest = Integer.MIN_VALUE;
+        
+        for (int num : arr) {
+            if (num > largest) {
+                secondLargest = largest;
+                largest = num;
+            } else if (num > secondLargest && num != largest) {
+                secondLargest = num;
+            }
+        }
+        
+        return secondLargest;
+    }
+    
+    public static int[] removeDuplicates(int[] arr) {
+        if (arr.length <= 1) return arr;
+        
+        int[] temp = new int[arr.length];
+        int uniqueCount = 0;
+        
+        for (int i = 0; i < arr.length; i++) {
+            boolean isDuplicate = false;
+            for (int j = 0; j < uniqueCount; j++) {
+                if (arr[i] == temp[j]) {
+                    isDuplicate = true;
+                    break;
+                }
+            }
+            if (!isDuplicate) {
+                temp[uniqueCount++] = arr[i];
+            }
+        }
+        
+        return Arrays.copyOf(temp, uniqueCount);
+    }
 }
 ```
 
 ## Key Takeaways
 
-1. **Arrays store multiple values** of the same type
-2. **Index starts at 0** and goes to length-1  
-3. **Array size is fixed** after creation
-4. **Use enhanced for loop** when you don't need index
-5. **Always check bounds** to avoid exceptions
-6. **Use Arrays class** for common operations
-7. **2D arrays** are arrays of arrays
-8. **Arrays are reference types** - be careful with comparisons
-9. **Initialize arrays** with meaningful values
-10. **Choose arrays** when size is known and fixed
+1. **Arrays store multiple elements** of same type in contiguous memory
+2. **Indexing starts from 0** and goes to length-1
+3. **Array size is fixed** once created and cannot be changed
+4. **Use array.length** to get size (property, not method)
+5. **Enhanced for loop** is cleaner for simple iteration
+6. **2D arrays** are arrays of arrays (matrix-like structure)
+7. **Arrays.toString()** is useful for printing array contents
+8. **Always check bounds** to avoid ArrayIndexOutOfBoundsException
+9. **Arrays are objects** in Java, even for primitive types
+10. **Use Collections** (ArrayList) when you need dynamic sizing
+
+---
+
+*Remember: Arrays are like organized storage containers - they keep your data neat, accessible, and efficiently managed in memory!*

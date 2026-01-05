@@ -1,531 +1,592 @@
-# Java Operators - Performing Operations on Data
+# Operators in Java - The Action Performers
 
-## What are Operators?
+## Simple Explanation
 
-Operators are **special symbols** that tell Java to perform specific operations on variables and values. Think of them as **mathematical and logical tools** that help you manipulate data.
+Think of **operators** as **action words** or **tools** that perform operations on data:
+- **+** is like a **calculator** that adds numbers
+- **>** is like a **judge** that compares values
+- **=** is like a **mover** that puts values into boxes (variables)
+- **&&** is like **AND gate** - both conditions must be true
 
-```
-Example: 5 + 3 = 8
-         ↑   ↑   ↑
-    operand operator result
-```
+### Real-World Analogy
+Operators are like **kitchen tools**:
+- **Knife (/)** = Cuts/divides things
+- **Mixer (+)** = Combines ingredients  
+- **Scale (>)** = Compares weights
+- **Timer (==)** = Checks if time matches
+
+## Professional Definition
+
+**Operators** are special symbols that perform specific operations on one, two, or three operands, and then return a result. They are the building blocks for creating expressions and performing calculations in Java programs.
 
 ## Types of Operators
 
-Java has several types of operators. Let's explore each one with simple examples:
+### Overview:
+```
+Java Operators
+├── Arithmetic Operators (+, -, *, /, %)
+├── Assignment Operators (=, +=, -=, etc.)
+├── Comparison/Relational Operators (==, !=, >, <, etc.)
+├── Logical Operators (&&, ||, !)
+├── Unary Operators (++, --, !, -)
+├── Bitwise Operators (&, |, ^, ~, <<, >>)
+├── Ternary Operator (? :)
+└── instanceof Operator
+```
 
 ## 1. Arithmetic Operators
 
-These perform **mathematical calculations** - just like a calculator!
+### Simple Explanation
+These are like **math operations** you learned in school - add, subtract, multiply, divide.
 
-### Basic Arithmetic Operators
-
+### Addition (+)
 ```java
-public class ArithmeticExample {
-    public static void main(String[] args) {
-        int a = 10;
-        int b = 3;
-        
-        // Addition
-        int sum = a + b;        // Result: 13
-        System.out.println("Addition: " + a + " + " + b + " = " + sum);
-        
-        // Subtraction  
-        int difference = a - b; // Result: 7
-        System.out.println("Subtraction: " + a + " - " + b + " = " + difference);
-        
-        // Multiplication
-        int product = a * b;    // Result: 30
-        System.out.println("Multiplication: " + a + " * " + b + " = " + product);
-        
-        // Division
-        int quotient = a / b;   // Result: 3 (integer division)
-        System.out.println("Division: " + a + " / " + b + " = " + quotient);
-        
-        // Modulus (Remainder)
-        int remainder = a % b;  // Result: 1 (10 ÷ 3 = 3 remainder 1)
-        System.out.println("Modulus: " + a + " % " + b + " = " + remainder);
-    }
-}
+int a = 10;
+int b = 5;
+int sum = a + b;        // sum = 15
+
+// String concatenation
+String firstName = "John";
+String lastName = "Doe";
+String fullName = firstName + " " + lastName;  // "John Doe"
+
+// Mixed types
+String message = "Age: " + 25;  // "Age: 25"
 ```
 
-### Understanding Division Types
-
+### Subtraction (-)
 ```java
-// Integer Division (whole numbers only)
-int result1 = 10 / 3;     // Result: 3 (no decimal part)
+int total = 100;
+int used = 30;
+int remaining = total - used;   // remaining = 70
 
-// Decimal Division  
-double result2 = 10.0 / 3; // Result: 3.3333...
-double result3 = (double) 10 / 3; // Result: 3.3333... (casting)
+double price = 99.99;
+double discount = 10.50;
+double finalPrice = price - discount;  // finalPrice = 89.49
 ```
 
-### Modulus Operator (%) Examples
-
-The modulus operator gives you the **remainder** after division:
-
+### Multiplication (*)
 ```java
-System.out.println(10 % 3);  // Output: 1 (10 ÷ 3 = 3 remainder 1)
-System.out.println(15 % 4);  // Output: 3 (15 ÷ 4 = 3 remainder 3)
-System.out.println(20 % 5);  // Output: 0 (20 ÷ 5 = 4 remainder 0)
+int length = 10;
+int width = 5;
+int area = length * width;      // area = 50
 
-// Useful for checking even/odd numbers
-int number = 7;
+double rate = 15.5;
+int hours = 8;
+double salary = rate * hours;   // salary = 124.0
+```
+
+### Division (/)
+```java
+// Integer division
+int total = 20;
+int groups = 4;
+int perGroup = total / groups;  // perGroup = 5
+
+// Floating point division
+double totalMoney = 100.0;
+int people = 3;
+double perPerson = totalMoney / people;  // perPerson = 33.333...
+
+// Watch out for integer division!
+int result1 = 10 / 3;          // result1 = 3 (not 3.33)
+double result2 = 10.0 / 3;     // result2 = 3.333...
+```
+
+### Modulus/Remainder (%)
+```java
+// Find remainder after division
+int dividend = 17;
+int divisor = 5;
+int remainder = dividend % divisor;     // remainder = 2
+// Because 17 ÷ 5 = 3 with remainder 2
+
+// Common uses:
+// Check if number is even or odd
+int number = 8;
 if (number % 2 == 0) {
-    System.out.println(number + " is even");
+    System.out.println("Even");        // This will print
 } else {
-    System.out.println(number + " is odd");  // This will execute
+    System.out.println("Odd");
+}
+
+// Check if divisible
+int year = 2024;
+if (year % 4 == 0) {
+    System.out.println("Leap year candidate");
 }
 ```
 
 ## 2. Assignment Operators
 
-These **assign values** to variables.
-
-### Basic Assignment
+### Simple Assignment (=)
 ```java
-int x = 5;        // Assigns 5 to x
-String name = "John";  // Assigns "John" to name
+// Think of = as "putting value into variable"
+int age = 25;           // Put 25 into age box
+String name = "Alice";  // Put "Alice" into name box
+boolean active = true;  // Put true into active box
 ```
 
 ### Compound Assignment Operators
-These combine arithmetic with assignment:
-
 ```java
-public class AssignmentExample {
-    public static void main(String[] args) {
-        int x = 10;
-        
-        // Add and assign
-        x += 5;    // Same as: x = x + 5;  → x becomes 15
-        System.out.println("After +=: " + x);
-        
-        // Subtract and assign  
-        x -= 3;    // Same as: x = x - 3;  → x becomes 12
-        System.out.println("After -=: " + x);
-        
-        // Multiply and assign
-        x *= 2;    // Same as: x = x * 2;  → x becomes 24
-        System.out.println("After *=: " + x);
-        
-        // Divide and assign
-        x /= 4;    // Same as: x = x / 4;  → x becomes 6
-        System.out.println("After /=: " + x);
-        
-        // Modulus and assign
-        x %= 4;    // Same as: x = x % 4;  → x becomes 2
-        System.out.println("After %=: " + x);
-    }
-}
+int score = 100;
+
+// These are shortcuts:
+score += 10;    // Same as: score = score + 10;    → score = 110
+score -= 5;     // Same as: score = score - 5;     → score = 105
+score *= 2;     // Same as: score = score * 2;     → score = 210
+score /= 3;     // Same as: score = score / 3;     → score = 70
+score %= 7;     // Same as: score = score % 7;     → score = 0
+
+// String concatenation assignment
+String message = "Hello";
+message += " World";    // Same as: message = message + " World";
+                       // message = "Hello World"
 ```
 
-## 3. Comparison (Relational) Operators
+## 3. Comparison/Relational Operators
 
-These **compare values** and return true or false:
+### Simple Explanation
+These are like **comparison tools** that answer yes/no questions about values.
 
+### Equal to (==)
 ```java
-public class ComparisonExample {
-    public static void main(String[] args) {
-        int a = 10;
-        int b = 5;
-        int c = 10;
-        
-        // Equal to
-        boolean isEqual = (a == c);        // true
-        System.out.println(a + " == " + c + " is " + isEqual);
-        
-        // Not equal to
-        boolean notEqual = (a != b);       // true  
-        System.out.println(a + " != " + b + " is " + notEqual);
-        
-        // Greater than
-        boolean greater = (a > b);         // true
-        System.out.println(a + " > " + b + " is " + greater);
-        
-        // Less than
-        boolean less = (a < b);            // false
-        System.out.println(a + " < " + b + " is " + less);
-        
-        // Greater than or equal to
-        boolean greaterEqual = (a >= c);   // true
-        System.out.println(a + " >= " + c + " is " + greaterEqual);
-        
-        // Less than or equal to  
-        boolean lessEqual = (a <= c);      // true
-        System.out.println(a + " <= " + c + " is " + lessEqual);
-    }
-}
+int a = 10;
+int b = 10;
+boolean isEqual = (a == b);     // true
+
+String name1 = "Alice";
+String name2 = "Alice";
+// For Strings, use .equals() method
+boolean sameNames = name1.equals(name2);  // true
+// Don't use == for Strings!
+```
+
+### Not equal to (!=)
+```java
+int x = 5;
+int y = 8;
+boolean isDifferent = (x != y);  // true
+
+char grade1 = 'A';
+char grade2 = 'B';
+boolean differentGrades = (grade1 != grade2);  // true
+```
+
+### Greater than (>)
+```java
+int myScore = 85;
+int passingScore = 60;
+boolean passed = (myScore > passingScore);  // true
+
+double price1 = 99.99;
+double price2 = 89.99;
+boolean isExpensive = (price1 > price2);   // true
+```
+
+### Less than (<)
+```java
+int age = 17;
+int votingAge = 18;
+boolean cannotVote = (age < votingAge);    // true
+```
+
+### Greater than or equal to (>=)
+```java
+int marks = 75;
+int requiredMarks = 75;
+boolean qualified = (marks >= requiredMarks);  // true
+```
+
+### Less than or equal to (<=)
+```java
+int speed = 60;
+int speedLimit = 65;
+boolean withinLimit = (speed <= speedLimit);  // true
 ```
 
 ## 4. Logical Operators
 
-These work with **boolean values** (true/false):
+### Simple Explanation
+These are like **decision makers** that combine multiple conditions.
 
-### AND Operator (&&)
-Returns true only if **both conditions** are true:
-
+### Logical AND (&&)
 ```java
-boolean result = (5 > 3) && (10 < 15);  // true && true = true
-boolean result2 = (5 > 3) && (10 > 15); // true && false = false
+// Both conditions must be true
+int age = 25;
+boolean hasLicense = true;
+boolean canDrive = (age >= 18) && hasLicense;  // true
+
+// Real-world example: Bank loan approval
+int salary = 50000;
+int creditScore = 750;
+boolean approvedForLoan = (salary > 30000) && (creditScore > 700);  // true
 ```
 
-### OR Operator (||)
-Returns true if **at least one condition** is true:
-
+### Logical OR (||)
 ```java
-boolean result = (5 > 3) || (10 > 15);  // true || false = true
-boolean result2 = (5 < 3) || (10 > 15); // false || false = false
+// At least one condition must be true
+char grade = 'B';
+boolean goodGrade = (grade == 'A') || (grade == 'B');  // true
+
+// Real-world example: Discount eligibility
+boolean isStudent = false;
+boolean isSenior = true;
+boolean getDiscount = isStudent || isSenior;  // true
 ```
 
-### NOT Operator (!)
-**Reverses** the boolean value:
-
+### Logical NOT (!)
 ```java
-boolean isTrue = true;
-boolean isFalse = !isTrue;  // !true = false
+// Reverses the boolean value
+boolean isRaining = false;
+boolean isSunny = !isRaining;  // true
 
-boolean result = !(5 > 10); // !(false) = true
+// Real-world example: Access control
+boolean isLoggedIn = true;
+boolean needsLogin = !isLoggedIn;  // false
 ```
 
-### Real-World Example
+### Combining Logical Operators
 ```java
-public class LoginSystem {
-    public static void main(String[] args) {
-        String username = "admin";
-        String password = "12345";
-        int age = 20;
-        boolean isActive = true;
-        
-        // Check if user can login
-        boolean canLogin = username.equals("admin") && 
-                          password.equals("12345") && 
-                          isActive;
-        
-        // Check if user is adult or teen
-        boolean canUseApp = (age >= 18) || (age >= 13 && age < 18);
-        
-        System.out.println("Can login: " + canLogin);
-        System.out.println("Can use app: " + canUseApp);
-    }
+// Complex conditions
+int age = 22;
+boolean hasJob = true;
+boolean isStudent = false;
+
+boolean canGetLoan = (age >= 18) && (hasJob || isStudent);
+// age >= 18: true
+// hasJob || isStudent: true || false = true
+// Final result: true && true = true
+```
+
+## 5. Unary Operators
+
+### Simple Explanation
+These operators work on **only one operand** (one value).
+
+### Increment (++)
+```java
+int count = 5;
+
+// Pre-increment: increment first, then use value
+int a = ++count;    // count becomes 6, then a = 6
+
+// Post-increment: use value first, then increment  
+int b = count++;    // b = 6, then count becomes 7
+
+System.out.println("count: " + count);  // count: 7
+System.out.println("a: " + a);          // a: 6
+System.out.println("b: " + b);          // b: 6
+```
+
+### Decrement (--)
+```java
+int lives = 3;
+
+// Pre-decrement
+int remaining = --lives;    // lives becomes 2, then remaining = 2
+
+// Post-decrement
+int current = lives--;      // current = 2, then lives becomes 1
+
+System.out.println("lives: " + lives);      // lives: 1
+System.out.println("remaining: " + remaining); // remaining: 2
+System.out.println("current: " + current);     // current: 2
+```
+
+### Unary Plus and Minus
+```java
+int positive = +5;      // positive = 5
+int negative = -5;      // negative = -5
+
+int x = 10;
+int opposite = -x;      // opposite = -10
+```
+
+### Logical NOT (!)
+```java
+boolean isComplete = false;
+boolean isIncomplete = !isComplete;  // isIncomplete = true
+```
+
+## 6. Ternary Operator (? :)
+
+### Simple Explanation
+This is like a **shortcut for if-else**. It asks a question and chooses between two answers.
+
+### Syntax:
+```java
+condition ? valueIfTrue : valueIfFalse
+```
+
+### Examples:
+```java
+// Instead of if-else:
+int age = 20;
+String status;
+if (age >= 18) {
+    status = "Adult";
+} else {
+    status = "Minor";
 }
+
+// Use ternary operator:
+String status = (age >= 18) ? "Adult" : "Minor";
+
+// More examples:
+int a = 10, b = 20;
+int max = (a > b) ? a : b;              // max = 20
+
+boolean hasTicket = true;
+String access = hasTicket ? "Enter" : "Buy ticket first";
+
+// Nested ternary (use sparingly)
+int score = 85;
+char grade = (score >= 90) ? 'A' : (score >= 80) ? 'B' : 'C';  // grade = 'B'
 ```
 
-## 5. Increment and Decrement Operators
+## 7. Operator Precedence and Associativity
 
-These **increase or decrease** values by 1:
+### Simple Explanation
+**Precedence** is like **order of operations** in math - multiplication before addition.
+**Associativity** is the **direction** of evaluation when operators have same precedence.
 
-### Post-increment/decrement (value used, then changed)
-```java
-int x = 5;
-int y = x++;  // y gets 5, then x becomes 6
-System.out.println("y = " + y + ", x = " + x);  // y = 5, x = 6
+### Precedence Table (High to Low):
+```
+1. () [] .                          (Highest precedence)
+2. ++ -- ! - + (unary)
+3. * / %
+4. + -
+5. < <= > >= instanceof  
+6. == !=
+7. &&
+8. ||
+9. ? :
+10. = += -= *= /= %=               (Lowest precedence)
 ```
 
-### Pre-increment/decrement (value changed, then used)
+### Examples:
 ```java
-int a = 5;
-int b = ++a;  // a becomes 6, then b gets 6
-System.out.println("b = " + b + ", a = " + a);  // b = 6, a = 6
+// Without parentheses
+int result = 2 + 3 * 4;         // result = 14 (not 20)
+// Because: 2 + (3 * 4) = 2 + 12 = 14
+
+// With parentheses to change order
+int result2 = (2 + 3) * 4;      // result2 = 20
+// Because: (2 + 3) * 4 = 5 * 4 = 20
+
+// Complex example
+int a = 10, b = 5, c = 2;
+int result3 = a + b * c;        // result3 = 20
+// Because: a + (b * c) = 10 + (5 * 2) = 10 + 10 = 20
+
+// Logical operators
+boolean result4 = true || false && false;  // result4 = true
+// Because: true || (false && false) = true || false = true
 ```
 
-### Complete Example
+## Interview Questions & Answers
+
+**Q1: What's the difference between = and ==?**
+**A:**
+- `=` is **assignment operator** - assigns value to variable
+- `==` is **comparison operator** - checks if two values are equal
+
+**Q2: What's the difference between ++i and i++?**
+**A:**
+- `++i` (pre-increment): increments i first, then returns new value
+- `i++` (post-increment): returns current value of i, then increments
+
+**Q3: What happens with integer division in Java?**
+**A:** Integer division truncates decimal part. Example: `7/3 = 2` (not 2.33). Use `7.0/3` or `(double)7/3` to get decimal result.
+
+**Q4: What's the difference between & and &&?**
+**A:**
+- `&&` is **logical AND** - if first condition is false, doesn't check second (short-circuit)
+- `&` is **bitwise AND** - always evaluates both conditions
+
+**Q5: What is operator precedence?**
+**A:** Order in which operators are evaluated. Multiplication has higher precedence than addition, so `2 + 3 * 4 = 14`, not `20`.
+
+## Complete Example Program
+
 ```java
-public class IncrementExample {
+/**
+ * Comprehensive demonstration of Java operators
+ */
+public class OperatorsExample {
+    
     public static void main(String[] args) {
-        int count = 10;
-        
-        System.out.println("Original count: " + count);
-        
-        // Post-increment
-        System.out.println("Post-increment: " + count++);  // Prints 10, count becomes 11
-        System.out.println("Count after post-increment: " + count);  // Prints 11
-        
-        // Pre-increment
-        System.out.println("Pre-increment: " + ++count);   // Count becomes 12, prints 12
-        
-        // Post-decrement
-        System.out.println("Post-decrement: " + count--);  // Prints 12, count becomes 11
-        
-        // Pre-decrement  
-        System.out.println("Pre-decrement: " + --count);   // Count becomes 10, prints 10
+        // Demonstrate different types of operators
+        demonstrateArithmeticOperators();
+        demonstrateComparisonOperators();
+        demonstrateLogicalOperators();
+        demonstrateAssignmentOperators();
+        demonstrateTernaryOperator();
+        demonstrateOperatorPrecedence();
     }
-}
-```
-
-## 6. Conditional (Ternary) Operator
-
-A **shortcut for if-else** statements:
-
-### Syntax: `condition ? value_if_true : value_if_false`
-
-```java
-public class TernaryExample {
-    public static void main(String[] args) {
-        int age = 20;
+    
+    public static void demonstrateArithmeticOperators() {
+        System.out.println("=== Arithmetic Operators ===");
         
-        // Traditional if-else
-        String status1;
-        if (age >= 18) {
-            status1 = "Adult";
-        } else {
-            status1 = "Minor";
-        }
+        int a = 15, b = 4;
         
-        // Ternary operator (same result, shorter)
-        String status2 = (age >= 18) ? "Adult" : "Minor";
+        System.out.println("a = " + a + ", b = " + b);
+        System.out.println("Addition (a + b): " + (a + b));        // 19
+        System.out.println("Subtraction (a - b): " + (a - b));     // 11
+        System.out.println("Multiplication (a * b): " + (a * b));  // 60
+        System.out.println("Division (a / b): " + (a / b));        // 3
+        System.out.println("Modulus (a % b): " + (a % b));         // 3
+        System.out.println();
+    }
+    
+    public static void demonstrateComparisonOperators() {
+        System.out.println("=== Comparison Operators ===");
         
-        System.out.println("Status 1: " + status1);
-        System.out.println("Status 2: " + status2);
+        int score1 = 85, score2 = 92;
         
-        // More examples
-        int score = 85;
-        String grade = (score >= 90) ? "A" : 
-                      (score >= 80) ? "B" : 
-                      (score >= 70) ? "C" : "F";
+        System.out.println("score1 = " + score1 + ", score2 = " + score2);
+        System.out.println("score1 == score2: " + (score1 == score2));  // false
+        System.out.println("score1 != score2: " + (score1 != score2));  // true
+        System.out.println("score1 > score2: " + (score1 > score2));    // false
+        System.out.println("score1 < score2: " + (score1 < score2));    // true
+        System.out.println("score1 >= 80: " + (score1 >= 80));          // true
+        System.out.println("score2 <= 100: " + (score2 <= 100));        // true
+        System.out.println();
+    }
+    
+    public static void demonstrateLogicalOperators() {
+        System.out.println("=== Logical Operators ===");
         
-        System.out.println("Grade: " + grade);
+        boolean hasLicense = true;
+        int age = 22;
+        boolean hasInsurance = false;
         
-        // Finding maximum
+        System.out.println("hasLicense: " + hasLicense);
+        System.out.println("age: " + age);
+        System.out.println("hasInsurance: " + hasInsurance);
+        
+        boolean canDrive = hasLicense && (age >= 18);
+        boolean needsInsurance = hasLicense && !hasInsurance;
+        boolean canRent = hasLicense || (age >= 25);
+        
+        System.out.println("Can drive: " + canDrive);               // true
+        System.out.println("Needs insurance: " + needsInsurance);   // true  
+        System.out.println("Can rent: " + canRent);                 // true
+        System.out.println();
+    }
+    
+    public static void demonstrateAssignmentOperators() {
+        System.out.println("=== Assignment Operators ===");
+        
+        int value = 100;
+        System.out.println("Initial value: " + value);
+        
+        value += 25;    // value = value + 25
+        System.out.println("After += 25: " + value);       // 125
+        
+        value -= 15;    // value = value - 15
+        System.out.println("After -= 15: " + value);       // 110
+        
+        value *= 2;     // value = value * 2
+        System.out.println("After *= 2: " + value);        // 220
+        
+        value /= 4;     // value = value / 4
+        System.out.println("After /= 4: " + value);        // 55
+        
+        value %= 10;    // value = value % 10
+        System.out.println("After %= 10: " + value);       // 5
+        System.out.println();
+    }
+    
+    public static void demonstrateTernaryOperator() {
+        System.out.println("=== Ternary Operator ===");
+        
+        int score = 87;
+        String result = (score >= 60) ? "Pass" : "Fail";
+        System.out.println("Score " + score + ": " + result);       // Pass
+        
         int a = 15, b = 25;
-        int max = (a > b) ? a : b;
-        System.out.println("Maximum: " + max);
+        int larger = (a > b) ? a : b;
+        System.out.println("Larger of " + a + " and " + b + ": " + larger); // 25
+        
+        boolean isEven = (score % 2 == 0) ? true : false;
+        System.out.println("Is " + score + " even? " + isEven);     // false
+        System.out.println();
+    }
+    
+    public static void demonstrateOperatorPrecedence() {
+        System.out.println("=== Operator Precedence ===");
+        
+        // Demonstrating precedence
+        int result1 = 2 + 3 * 4;
+        System.out.println("2 + 3 * 4 = " + result1);              // 14 (not 20)
+        
+        int result2 = (2 + 3) * 4;  
+        System.out.println("(2 + 3) * 4 = " + result2);            // 20
+        
+        // Complex expression
+        int a = 10, b = 5, c = 2;
+        int result3 = a + b * c - 3;
+        System.out.println("10 + 5 * 2 - 3 = " + result3);         // 17
+        // Calculation: 10 + (5 * 2) - 3 = 10 + 10 - 3 = 17
+        
+        // Logical operators precedence
+        boolean result4 = true || false && false;
+        System.out.println("true || false && false = " + result4);  // true
+        // Calculation: true || (false && false) = true || false = true
+        System.out.println();
     }
 }
-```
-
-## 7. Operator Precedence
-
-When multiple operators are used, Java follows a **specific order**:
-
-### Precedence Table (High to Low)
-```
-1. ()                    - Parentheses (highest)
-2. ++, --, !            - Unary operators
-3. *, /, %              - Multiplication, Division, Modulus
-4. +, -                 - Addition, Subtraction  
-5. <, <=, >, >=         - Relational operators
-6. ==, !=               - Equality operators
-7. &&                   - Logical AND
-8. ||                   - Logical OR
-9. ?:                   - Ternary operator
-10. =, +=, -=, *=, /=   - Assignment operators (lowest)
-```
-
-### Examples
-```java
-int result1 = 5 + 3 * 2;        // Result: 11 (not 16)
-                                // Because * has higher precedence than +
-                                // So: 5 + (3 * 2) = 5 + 6 = 11
-
-int result2 = (5 + 3) * 2;      // Result: 16
-                                // Parentheses have highest precedence
-                                // So: (8) * 2 = 16
-
-boolean result3 = 5 > 3 && 10 < 15;  // true
-                                     // > and < are evaluated first
-                                     // Then: true && true = true
 ```
 
 ## Real-World Applications
 
-### 1. Shopping Cart Calculator
+### 1. Calculator Logic
 ```java
-public class ShoppingCart {
-    public static void main(String[] args) {
-        double itemPrice = 25.99;
-        int quantity = 3;
-        double taxRate = 0.085;  // 8.5%
-        double discountPercent = 10; // 10% discount
-        
-        // Calculate subtotal
-        double subtotal = itemPrice * quantity;
-        
-        // Apply discount
-        double discountAmount = subtotal * (discountPercent / 100);
-        double afterDiscount = subtotal - discountAmount;
-        
-        // Calculate tax
-        double tax = afterDiscount * taxRate;
-        
-        // Final total
-        double total = afterDiscount + tax;
-        
-        System.out.println("=== Shopping Cart ===");
-        System.out.println("Item Price: $" + itemPrice);
-        System.out.println("Quantity: " + quantity);
-        System.out.println("Subtotal: $" + subtotal);
-        System.out.println("Discount: $" + discountAmount);
-        System.out.println("After Discount: $" + afterDiscount);
-        System.out.println("Tax: $" + tax);
-        System.out.println("Final Total: $" + total);
+public static double calculate(double num1, double num2, char operator) {
+    switch (operator) {
+        case '+': return num1 + num2;
+        case '-': return num1 - num2;
+        case '*': return num1 * num2;
+        case '/': return (num2 != 0) ? num1 / num2 : 0;
+        default: return 0;
     }
 }
 ```
 
 ### 2. Grade Calculator
 ```java
-public class GradeCalculator {
-    public static void main(String[] args) {
-        int homework = 85;
-        int quiz = 92;
-        int midterm = 78;
-        int finalExam = 88;
-        
-        // Calculate weighted average
-        double average = (homework * 0.2) + (quiz * 0.1) + 
-                        (midterm * 0.3) + (finalExam * 0.4);
-        
-        // Determine letter grade
-        String letterGrade = (average >= 90) ? "A" :
-                           (average >= 80) ? "B" :
-                           (average >= 70) ? "C" :
-                           (average >= 60) ? "D" : "F";
-        
-        // Check if passed
-        boolean passed = average >= 60;
-        
-        System.out.println("=== Grade Report ===");
-        System.out.println("Homework (20%): " + homework);
-        System.out.println("Quiz (10%): " + quiz);
-        System.out.println("Midterm (30%): " + midterm);
-        System.out.println("Final (40%): " + finalExam);
-        System.out.println("Average: " + average);
-        System.out.println("Letter Grade: " + letterGrade);
-        System.out.println("Passed: " + passed);
-    }
+public static char calculateGrade(int score) {
+    return (score >= 90) ? 'A' : 
+           (score >= 80) ? 'B' : 
+           (score >= 70) ? 'C' : 
+           (score >= 60) ? 'D' : 'F';
 }
 ```
 
-## Common Mistakes and Solutions
-
-### 1. Integer Division
+### 3. Validation Logic
 ```java
-// ✗ Wrong - loses decimal part
-int result = 5 / 2;  // Result: 2 (not 2.5)
-
-// ✓ Correct - use double
-double result = 5.0 / 2;  // Result: 2.5
-// or
-double result = (double) 5 / 2;  // Result: 2.5
-```
-
-### 2. Assignment vs Equality
-```java
-int x = 5;
-
-// ✗ Wrong - this assigns 10 to x
-if (x = 10) {  // Compilation error in boolean context
-    System.out.println("This won't work");
+public static boolean isValidAge(int age) {
+    return (age >= 0) && (age <= 150);
 }
 
-// ✓ Correct - this compares x with 10
-if (x == 10) {
-    System.out.println("x equals 10");
+public static boolean canVote(int age, boolean isCitizen) {
+    return (age >= 18) && isCitizen;
 }
-```
-
-### 3. String Comparison
-```java
-String name1 = "John";
-String name2 = "John";
-
-// ✗ Wrong - might not work as expected
-if (name1 == name2) {
-    System.out.println("Names are same");
-}
-
-// ✓ Correct - use equals() for strings
-if (name1.equals(name2)) {
-    System.out.println("Names are same");
-}
-```
-
-## Practice Exercises
-
-### Exercise 1: Basic Calculator
-```java
-public class Calculator {
-    public static void main(String[] args) {
-        // Create a calculator that:
-        // 1. Takes two numbers
-        // 2. Performs all arithmetic operations
-        // 3. Shows which number is larger
-        // 4. Checks if numbers are equal
-        
-        double num1 = 15.5;
-        double num2 = 4.2;
-        
-        // Implement all operations and comparisons
-    }
-}
-```
-
-### Exercise 2: Age Category
-```java
-public class AgeCategory {
-    public static void main(String[] args) {
-        int age = 25;
-        
-        // Use operators to determine:
-        // - Child (0-12)
-        // - Teen (13-17)  
-        // - Adult (18-64)
-        // - Senior (65+)
-        
-        // Use ternary operator or logical operators
-    }
-}
-```
-
-### Exercise 3: Salary Calculator
-```java
-public class SalaryCalculator {
-    public static void main(String[] args) {
-        double hourlyRate = 25.50;
-        int hoursWorked = 45;
-        
-        // Calculate:
-        // - Regular pay (first 40 hours)
-        // - Overtime pay (hours > 40 at 1.5x rate)
-        // - Gross pay
-        // - Tax deduction (22%)
-        // - Net pay
-    }
-}
-```
-
-## Quick Reference
-
-```java
-// Arithmetic
-+ - * / %
-
-// Assignment  
-= += -= *= /= %=
-
-// Comparison
-== != > < >= <=
-
-// Logical
-&& || !
-
-// Increment/Decrement
-++ --
-
-// Ternary
-condition ? value1 : value2
-
-// Precedence (remember PEMDAS-like rule)
-() → ++,--,! → *,/,% → +,- → <,>,<=,>= → ==,!= → && → || → ?: → =
 ```
 
 ## Key Takeaways
 
-1. **Arithmetic operators** work like basic math
-2. **Assignment operators** store values in variables
-3. **Comparison operators** compare values and return true/false
-4. **Logical operators** work with boolean values
-5. **Use parentheses** when in doubt about precedence
-6. **Integer division** drops decimal parts
-7. **Ternary operator** is a shortcut for simple if-else
-8. **Practice** with real-world examples to master operators
+1. **Arithmetic operators** perform math operations (+, -, *, /, %)
+2. **Assignment operators** store values (=, +=, -=, etc.)
+3. **Comparison operators** compare values (==, !=, >, <, etc.)
+4. **Logical operators** combine conditions (&&, ||, !)
+5. **Ternary operator** is shorthand for if-else (? :)
+6. **Operator precedence** determines evaluation order
+7. **Use parentheses** to make precedence clear
+8. **++ and --** have pre and post forms with different behavior
+
+---
+
+*Remember: Operators are the tools that make your data come alive - choose the right operator for the right job!*

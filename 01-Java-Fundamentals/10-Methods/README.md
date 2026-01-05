@@ -1,1156 +1,1198 @@
-# Methods - Building Reusable Code Blocks
+# Methods in Java - Reusable Code Blocks
 
-## What are Methods?
+## Simple Explanation
 
-Methods are **reusable blocks of code** that perform specific tasks. Think of them as:
-- **Mini-programs** within your main program
-- **Tools** that you can use whenever needed
-- **Functions** that take input, process it, and often return output
-- **Building blocks** for organizing code efficiently
+Think of **Methods** as **mini-programs** or **action blocks** inside your main program:
+- Like **recipes** with step-by-step instructions
+- **Reusable tools** that perform specific tasks
+- **Functions** that can take inputs and give outputs
+- **Building blocks** that make programs organized and manageable
 
-```java
-// Without methods (repetitive)
-System.out.println("Welcome, John!");
-System.out.println("Your balance is: $1500");
-System.out.println("Thank you for banking with us!");
+### Real-World Analogies
+- **Recipe** = Method (ingredients = parameters, cooking = process, dish = return value)
+- **Calculator functions** = Methods (add, subtract, multiply, divide)
+- **TV remote buttons** = Methods (each button does a specific action)
+- **Factory machines** = Methods (raw materials in → finished product out)
 
-System.out.println("Welcome, Sarah!");  
-System.out.println("Your balance is: $2300");
-System.out.println("Thank you for banking with us!");
+## Professional Definition
 
-// With methods (clean and reusable)
-displayWelcome("John", 1500);
-displayWelcome("Sarah", 2300);
-```
+**Methods** are blocks of reusable code that perform specific tasks. They help organize code, avoid repetition, and make programs more modular and maintainable. Methods can accept parameters (inputs) and return values (outputs).
 
 ## Why Use Methods?
 
-Methods provide several key benefits:
+### Benefits:
 - **Code Reusability**: Write once, use many times
-- **Organization**: Break complex problems into smaller pieces  
-- **Maintainability**: Fix bugs in one place
-- **Readability**: Make code easier to understand
-- **Testing**: Test individual pieces of functionality
-- **Modularity**: Create independent, interchangeable components
+- **Organization**: Break large problems into smaller pieces
+- **Maintainability**: Easier to debug and update
+- **Readability**: Makes code more understandable
+- **Testing**: Can test individual pieces separately
+- **Modularity**: Each method has a specific responsibility
 
----
-
-## Method Syntax and Structure
-
-### Basic Method Structure
+### Without Methods (Repetitive):
 ```java
-public class MethodBasics {
-    // Method components:
-    // access_modifier return_type method_name(parameters) {
-    //     method_body
-    //     return statement; // if return_type is not void
-    // }
-    
-    public static void main(String[] args) {
-        // Call methods
-        greetUser();
-        int result = addNumbers(5, 3);
-        System.out.println("Sum: " + result);
-        
-        displayUserInfo("Alice", 25, "Engineer");
-    }
-    
-    // Method with no parameters, no return value
-    public static void greetUser() {
-        System.out.println("Hello! Welcome to our application!");
-        System.out.println("Have a great day!");
-    }
-    
-    // Method with parameters, with return value
-    public static int addNumbers(int a, int b) {
-        int sum = a + b;
-        return sum; // Return the result
-    }
-    
-    // Method with multiple parameters
-    public static void displayUserInfo(String name, int age, String profession) {
-        System.out.println("User Information:");
-        System.out.println("Name: " + name);
-        System.out.println("Age: " + age);
-        System.out.println("Profession: " + profession);
-        System.out.println("-------------------");
-    }
+// Calculating area multiple times without methods
+double length1 = 10, width1 = 5;
+double area1 = length1 * width1;
+System.out.println("Area 1: " + area1);
+
+double length2 = 8, width2 = 6;
+double area2 = length2 * width2;
+System.out.println("Area 2: " + area2);
+
+double length3 = 12, width3 = 4;
+double area3 = length3 * width3;
+System.out.println("Area 3: " + area3);
+```
+
+### With Methods (Organized):
+```java
+// Using methods - clean and reusable
+public static double calculateArea(double length, double width) {
+    return length * width;
+}
+
+public static void main(String[] args) {
+    System.out.println("Area 1: " + calculateArea(10, 5));
+    System.out.println("Area 2: " + calculateArea(8, 6));
+    System.out.println("Area 3: " + calculateArea(12, 4));
 }
 ```
 
-### Access Modifiers
+## Method Anatomy
+
+### Basic Structure:
 ```java
-public class AccessModifiers {
-    // public - accessible from anywhere
-    public static void publicMethod() {
-        System.out.println("This is a public method");
-    }
-    
-    // private - only accessible within the same class
-    private static void privateMethod() {
-        System.out.println("This is a private method");
-    }
-    
-    // protected - accessible within same package and subclasses
-    protected static void protectedMethod() {
-        System.out.println("This is a protected method");
-    }
-    
-    // default (no modifier) - accessible within same package
-    static void defaultMethod() {
-        System.out.println("This is a default method");
-    }
-    
-    public static void main(String[] args) {
-        publicMethod();     // ✓ Works
-        privateMethod();    // ✓ Works (same class)
-        protectedMethod();  // ✓ Works (same class)
-        defaultMethod();    // ✓ Works (same class)
-    }
+[access_modifier] [static] [return_type] methodName([parameters]) {
+    // Method body
+    [return statement;]  // if return type is not void
 }
 ```
 
----
+### Components Explained:
+1. **Access Modifier**: `public`, `private`, `protected` (who can use it)
+2. **Static**: Method belongs to class, not instance
+3. **Return Type**: What the method gives back (`void`, `int`, `String`, etc.)
+4. **Method Name**: What you call it (follows camelCase convention)
+5. **Parameters**: Inputs the method needs (optional)
+6. **Method Body**: The actual code that executes
+7. **Return Statement**: Sends back the result (if not void)
 
-## Method Parameters and Arguments
+## Types of Methods
 
-### 1. Different Parameter Types
+### 1. Methods with No Parameters, No Return Value (void)
 ```java
-public class ParameterTypes {
-    public static void main(String[] args) {
-        // Primitive parameters
-        calculateArea(10.5, 20.3);
-        
-        // String parameter
-        greetByName("John");
-        
-        // Array parameter
-        int[] numbers = {1, 2, 3, 4, 5};
-        printArray(numbers);
-        
-        // Multiple mixed parameters
-        createAccount("Alice", 25, 1500.75, true);
-    }
-    
-    // Method with double parameters
-    public static void calculateArea(double length, double width) {
-        double area = length * width;
-        System.out.printf("Area: %.2f square units\n", area);
-    }
-    
-    // Method with String parameter
-    public static void greetByName(String name) {
-        System.out.println("Hello, " + name + "! Nice to meet you!");
-    }
-    
-    // Method with array parameter
-    public static void printArray(int[] arr) {
-        System.out.print("Array contents: ");
-        for (int i = 0; i < arr.length; i++) {
-            System.out.print(arr[i]);
-            if (i < arr.length - 1) {
-                System.out.print(", ");
-            }
+public static void sayHello() {
+    System.out.println("Hello, World!");
+    System.out.println("Welcome to Java programming!");
+}
+
+public static void main(String[] args) {
+    sayHello();  // Call the method
+    sayHello();  // Can call multiple times
+}
+
+// Output:
+// Hello, World!
+// Welcome to Java programming!
+// Hello, World!
+// Welcome to Java programming!
+```
+
+### 2. Methods with Parameters, No Return Value
+```java
+public static void greetUser(String name) {
+    System.out.println("Hello, " + name + "!");
+    System.out.println("Nice to meet you!");
+}
+
+public static void printRectangle(int width, int height, char symbol) {
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            System.out.print(symbol);
         }
         System.out.println();
     }
-    
-    // Method with multiple parameter types
-    public static void createAccount(String name, int age, double balance, boolean isPremium) {
-        System.out.println("Creating account...");
-        System.out.println("Name: " + name);
-        System.out.println("Age: " + age);
-        System.out.printf("Initial Balance: $%.2f\n", balance);
-        System.out.println("Premium Member: " + (isPremium ? "Yes" : "No"));
-        System.out.println("Account created successfully!\n");
-    }
 }
+
+public static void main(String[] args) {
+    greetUser("Alice");    // Pass argument
+    greetUser("Bob");      // Different argument
+    
+    System.out.println("\nRectangle:");
+    printRectangle(5, 3, '*');
+}
+
+// Output:
+// Hello, Alice!
+// Nice to meet you!
+// Hello, Bob!
+// Nice to meet you!
+// 
+// Rectangle:
+// *****
+// *****
+// *****
 ```
 
-### 2. Variable Arguments (Varargs)
+### 3. Methods with No Parameters, Return Value
 ```java
-public class VarargsExample {
-    public static void main(String[] args) {
-        // Call with different number of arguments
-        calculateSum();                    // No arguments
-        calculateSum(5);                   // One argument
-        calculateSum(1, 2, 3);            // Multiple arguments
-        calculateSum(10, 20, 30, 40, 50); // Many arguments
-        
-        // Mix regular parameters with varargs
-        displayResults("Test Scores", 85, 92, 78, 90, 88);
-    }
+public static int getCurrentYear() {
+    return 2024;  // Return a value
+}
+
+public static double generateRandomNumber() {
+    return Math.random() * 100;  // Random number 0-100
+}
+
+public static String getWelcomeMessage() {
+    return "Welcome to our application!";
+}
+
+public static void main(String[] args) {
+    int year = getCurrentYear();
+    System.out.println("Current year: " + year);
     
-    // Varargs method - accepts variable number of integers
-    public static void calculateSum(int... numbers) {
-        if (numbers.length == 0) {
-            System.out.println("No numbers provided. Sum = 0");
-            return;
-        }
-        
-        int sum = 0;
-        System.out.print("Numbers: ");
-        for (int i = 0; i < numbers.length; i++) {
-            sum += numbers[i];
-            System.out.print(numbers[i]);
-            if (i < numbers.length - 1) {
-                System.out.print(" + ");
-            }
-        }
-        System.out.println(" = " + sum);
-    }
+    double randomNum = generateRandomNumber();
+    System.out.println("Random number: " + randomNum);
     
-    // Regular parameter + varargs (varargs must be last)
-    public static void displayResults(String title, int... scores) {
-        System.out.println("\n" + title + ":");
-        
-        if (scores.length == 0) {
-            System.out.println("No scores available.");
-            return;
-        }
-        
-        int total = 0;
-        for (int i = 0; i < scores.length; i++) {
-            System.out.println("Score " + (i + 1) + ": " + scores[i]);
-            total += scores[i];
-        }
-        
-        double average = (double) total / scores.length;
-        System.out.printf("Average: %.2f\n", average);
-        System.out.println();
-    }
+    String message = getWelcomeMessage();
+    System.out.println(message);
 }
 ```
 
----
-
-## Return Types and Return Statements
-
-### 1. Methods with Different Return Types
+### 4. Methods with Parameters and Return Value
 ```java
-public class ReturnTypes {
-    public static void main(String[] args) {
-        // Methods that return values
-        int sum = add(10, 5);
-        System.out.println("Sum: " + sum);
-        
-        double average = calculateAverage(85, 90, 78, 92);
-        System.out.println("Average: " + average);
-        
-        String greeting = generateGreeting("Alice", "morning");
-        System.out.println(greeting);
-        
-        boolean isPassing = isPassingGrade(75);
-        System.out.println("Is passing: " + isPassing);
-        
-        int[] evenNumbers = getEvenNumbers(1, 10);
-        System.out.print("Even numbers: ");
-        for (int num : evenNumbers) {
-            System.out.print(num + " ");
-        }
-        System.out.println();
-    }
+public static int addNumbers(int a, int b) {
+    int sum = a + b;
+    return sum;
+}
+
+public static double calculateCircleArea(double radius) {
+    double area = Math.PI * radius * radius;
+    return area;
+}
+
+public static String createFullName(String firstName, String lastName) {
+    return firstName + " " + lastName;
+}
+
+public static boolean isEven(int number) {
+    return number % 2 == 0;
+}
+
+public static void main(String[] args) {
+    int result = addNumbers(10, 20);
+    System.out.println("Sum: " + result);
     
-    // Return integer
-    public static int add(int a, int b) {
-        return a + b;
-    }
+    double circleArea = calculateCircleArea(5.0);
+    System.out.println("Circle area: " + circleArea);
     
-    // Return double
-    public static double calculateAverage(int... scores) {
-        if (scores.length == 0) {
-            return 0.0;
-        }
-        
-        int sum = 0;
-        for (int score : scores) {
-            sum += score;
-        }
-        
-        return (double) sum / scores.length;
-    }
+    String fullName = createFullName("John", "Doe");
+    System.out.println("Full name: " + fullName);
     
-    // Return String
-    public static String generateGreeting(String name, String timeOfDay) {
-        String greeting;
-        
-        switch (timeOfDay.toLowerCase()) {
-            case "morning":
-                greeting = "Good morning";
-                break;
-            case "afternoon":
-                greeting = "Good afternoon";
-                break;
-            case "evening":
-                greeting = "Good evening";
-                break;
-            default:
-                greeting = "Hello";
-        }
-        
-        return greeting + ", " + name + "!";
-    }
-    
-    // Return boolean
-    public static boolean isPassingGrade(int score) {
-        return score >= 60; // Return true if score is 60 or higher
-    }
-    
-    // Return array
-    public static int[] getEvenNumbers(int start, int end) {
-        // Count even numbers first
-        int count = 0;
-        for (int i = start; i <= end; i++) {
-            if (i % 2 == 0) {
-                count++;
-            }
-        }
-        
-        // Create array and populate with even numbers
-        int[] evenNumbers = new int[count];
-        int index = 0;
-        for (int i = start; i <= end; i++) {
-            if (i % 2 == 0) {
-                evenNumbers[index] = i;
-                index++;
-            }
-        }
-        
-        return evenNumbers;
-    }
+    boolean evenCheck = isEven(15);
+    System.out.println("15 is even: " + evenCheck);
 }
 ```
-
-### 2. Multiple Return Statements
-```java
-public class MultipleReturns {
-    public static void main(String[] args) {
-        System.out.println("Grade A: " + getLetterGrade(95));
-        System.out.println("Grade B: " + getLetterGrade(85));
-        System.out.println("Grade C: " + getLetterGrade(75));
-        System.out.println("Grade F: " + getLetterGrade(45));
-        
-        System.out.println("Max of 10, 5: " + findMaximum(10, 5));
-        System.out.println("Max of 3, 8: " + findMaximum(3, 8));
-        
-        validateAge(25);
-        validateAge(-5);
-        validateAge(150);
-    }
-    
-    // Multiple return statements based on conditions
-    public static String getLetterGrade(int score) {
-        if (score >= 90) {
-            return "A"; // Early return
-        }
-        if (score >= 80) {
-            return "B";
-        }
-        if (score >= 70) {
-            return "C";
-        }
-        if (score >= 60) {
-            return "D";
-        }
-        return "F"; // Default return
-    }
-    
-    // Early return for efficiency
-    public static int findMaximum(int a, int b) {
-        if (a >= b) {
-            return a; // Return immediately if a is larger
-        }
-        return b; // Only reached if a < b
-    }
-    
-    // Void method with early return
-    public static void validateAge(int age) {
-        if (age < 0) {
-            System.out.println("Error: Age cannot be negative!");
-            return; // Exit method early
-        }
-        
-        if (age > 120) {
-            System.out.println("Error: Age seems unrealistic!");
-            return; // Exit method early
-        }
-        
-        // This code only runs if age is valid
-        System.out.println("Valid age: " + age);
-    }
-}
-```
-
----
 
 ## Method Overloading
 
-### Method Overloading Examples
+**Method Overloading** = Same method name, different parameters
+
 ```java
-public class MethodOverloading {
-    public static void main(String[] args) {
-        // Same method name, different parameters
-        System.out.println("Add two integers: " + add(5, 3));
-        System.out.println("Add three integers: " + add(5, 3, 2));
-        System.out.println("Add two doubles: " + add(5.5, 3.2));
-        System.out.println("Add integer and double: " + add(5, 3.2));
-        
-        // Overloaded display methods
-        displayInfo("John");
-        displayInfo("Alice", 25);
-        displayInfo("Bob", 30, "Engineer");
-        
-        // Overloaded calculation methods
-        System.out.println("Circle area: " + calculateArea(5.0));
-        System.out.println("Rectangle area: " + calculateArea(4.0, 6.0));
-        System.out.println("Triangle area: " + calculateArea(3.0, 4.0, 5.0));
+// Same method name with different parameter combinations
+public static int calculate(int a, int b) {
+    return a + b;  // Addition for integers
+}
+
+public static double calculate(double a, double b) {
+    return a + b;  // Addition for doubles
+}
+
+public static int calculate(int a, int b, int c) {
+    return a + b + c;  // Addition for three integers
+}
+
+public static String calculate(String a, String b) {
+    return a + b;  // Concatenation for strings
+}
+
+public static void main(String[] args) {
+    System.out.println(calculate(5, 3));           // Calls int version
+    System.out.println(calculate(5.5, 3.2));      // Calls double version
+    System.out.println(calculate(1, 2, 3));       // Calls three-parameter version
+    System.out.println(calculate("Hello", "World")); // Calls string version
+}
+
+// Output:
+// 8
+// 8.7
+// 6
+// HelloWorld
+```
+
+### Valid Overloading Examples:
+```java
+// Different number of parameters
+public static void print(String message) { }
+public static void print(String message, int times) { }
+
+// Different parameter types
+public static double area(double radius) { }                    // Circle
+public static double area(double length, double width) { }      // Rectangle
+public static double area(double base, double height, String shape) { } // Triangle
+
+// Different parameter order (not recommended, confusing)
+public static void process(String name, int age) { }
+public static void process(int age, String name) { }
+```
+
+### Invalid Overloading (Compilation Error):
+```java
+// Only return type is different - NOT valid overloading
+public static int getValue() { return 1; }
+public static double getValue() { return 1.0; }  // ERROR!
+
+// Only parameter names are different - NOT valid overloading
+public static void method(int a) { }
+public static void method(int b) { }  // ERROR!
+```
+
+## Variable Arguments (Varargs)
+
+**Varargs** allows methods to accept variable number of arguments:
+
+```java
+// Method that accepts any number of integers
+public static int sum(int... numbers) {
+    int total = 0;
+    for (int num : numbers) {
+        total += num;
+    }
+    return total;
+}
+
+// Method that accepts fixed parameter + varargs
+public static void printInfo(String prefix, String... messages) {
+    System.out.print(prefix + ": ");
+    for (String message : messages) {
+        System.out.print(message + " ");
+    }
+    System.out.println();
+}
+
+public static void main(String[] args) {
+    // Can call with different number of arguments
+    System.out.println(sum());              // 0 (no arguments)
+    System.out.println(sum(5));             // 5
+    System.out.println(sum(1, 2, 3));       // 6
+    System.out.println(sum(10, 20, 30, 40)); // 100
+    
+    printInfo("Alert", "System", "is", "ready");
+    printInfo("Error", "File", "not", "found", "please", "check");
+}
+
+// Output:
+// 0
+// 5
+// 6
+// 100
+// Alert: System is ready 
+// Error: File not found please check
+```
+
+### Varargs Rules:
+1. **Only one varargs parameter** per method
+2. **Must be last parameter** if multiple parameters exist
+3. **Treated as array** inside the method
+
+## Method Scope and Local Variables
+
+### Local Variables:
+```java
+public static void demonstrateScope() {
+    int x = 10;        // Local variable - only exists in this method
+    String message = "Hello";  // Another local variable
+    
+    if (x > 5) {
+        int y = 20;    // Block-scope variable - only exists in this if block
+        System.out.println("x = " + x + ", y = " + y);
     }
     
-    // Overloaded add methods - different number of parameters
+    // System.out.println(y);  // ERROR! y is not accessible here
+    System.out.println("x = " + x);  // x is still accessible
+}
+
+public static void anotherMethod() {
+    // System.out.println(x);  // ERROR! x from demonstrateScope() not accessible here
+    int x = 30;  // This is a different x, local to this method
+    System.out.println("Different x: " + x);
+}
+```
+
+### Parameter vs Local Variable:
+```java
+public static void processData(int input) {  // 'input' is a parameter
+    int result = input * 2;    // 'result' is a local variable
+    String status = "processed";  // 'status' is a local variable
+    
+    System.out.println("Input: " + input);
+    System.out.println("Result: " + result);
+    System.out.println("Status: " + status);
+}  // All variables destroyed when method ends
+```
+
+## Recursive Methods
+
+**Recursion** = Method calls itself
+
+```java
+// Calculate factorial using recursion
+public static int factorial(int n) {
+    // Base case - stops the recursion
+    if (n <= 1) {
+        return 1;
+    }
+    // Recursive case - method calls itself
+    return n * factorial(n - 1);
+}
+
+// Calculate Fibonacci number using recursion
+public static int fibonacci(int n) {
+    // Base cases
+    if (n <= 0) return 0;
+    if (n == 1) return 1;
+    
+    // Recursive case
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+// Print numbers from n to 1 using recursion
+public static void countDown(int n) {
+    // Base case
+    if (n <= 0) {
+        System.out.println("Done!");
+        return;
+    }
+    
+    // Print current number
+    System.out.println(n);
+    
+    // Recursive call
+    countDown(n - 1);
+}
+
+public static void main(String[] args) {
+    System.out.println("Factorial of 5: " + factorial(5));  // 120
+    System.out.println("Fibonacci of 6: " + fibonacci(6));  // 8
+    
+    System.out.println("Countdown from 5:");
+    countDown(5);
+}
+
+// Output:
+// Factorial of 5: 120
+// Fibonacci of 6: 8
+// Countdown from 5:
+// 5
+// 4
+// 3
+// 2
+// 1
+// Done!
+```
+
+### How Recursion Works:
+```java
+// factorial(5) breakdown:
+// factorial(5) = 5 * factorial(4)
+//              = 5 * 4 * factorial(3)
+//              = 5 * 4 * 3 * factorial(2)
+//              = 5 * 4 * 3 * 2 * factorial(1)
+//              = 5 * 4 * 3 * 2 * 1
+//              = 120
+```
+
+## Access Modifiers in Methods
+
+### 1. Public Methods
+```java
+public static void publicMethod() {
+    System.out.println("This method can be called from anywhere");
+}
+```
+
+### 2. Private Methods
+```java
+private static void privateMethod() {
+    System.out.println("This method can only be called from within this class");
+}
+
+// Helper method - often private
+private static boolean isValidAge(int age) {
+    return age >= 0 && age <= 150;
+}
+
+public static void registerUser(String name, int age) {
+    if (isValidAge(age)) {  // Using private helper method
+        System.out.println("User " + name + " registered successfully");
+    } else {
+        System.out.println("Invalid age: " + age);
+    }
+}
+```
+
+### 3. Protected Methods
+```java
+protected static void protectedMethod() {
+    System.out.println("Accessible within package and subclasses");
+}
+```
+
+## Static vs Non-Static Methods
+
+### Static Methods (Class Methods):
+```java
+public class Calculator {
+    // Static method - belongs to the class
     public static int add(int a, int b) {
-        System.out.println("Adding two integers");
         return a + b;
     }
     
-    public static int add(int a, int b, int c) {
-        System.out.println("Adding three integers");
-        return a + b + c;
+    // Call static method using class name
+    public static void main(String[] args) {
+        int result = Calculator.add(5, 3);  // ClassName.methodName()
+        System.out.println("Result: " + result);
+    }
+}
+```
+
+### Non-Static Methods (Instance Methods):
+```java
+public class Calculator {
+    private int memory = 0;  // Instance variable
+    
+    // Non-static method - belongs to object instance
+    public int addToMemory(int value) {
+        memory += value;
+        return memory;
     }
     
-    // Overloaded add methods - different parameter types
-    public static double add(double a, double b) {
-        System.out.println("Adding two doubles");
-        return a + b;
+    public int getMemory() {
+        return memory;
     }
     
-    public static double add(int a, double b) {
-        System.out.println("Adding integer and double");
-        return a + b;
+    public static void main(String[] args) {
+        // Need to create object to call non-static methods
+        Calculator calc = new Calculator();
+        System.out.println("Memory: " + calc.addToMemory(10));
+        System.out.println("Memory: " + calc.addToMemory(5));
+        System.out.println("Current memory: " + calc.getMemory());
+    }
+}
+
+// Output:
+// Memory: 10
+// Memory: 15
+// Current memory: 15
+```
+
+## Best Practices for Methods
+
+### 1. Single Responsibility Principle
+```java
+// BAD - method does too many things
+public static void processUserBad(String name, int age, String email) {
+    // Validate name
+    if (name == null || name.trim().isEmpty()) {
+        System.out.println("Invalid name");
+        return;
     }
     
-    // Overloaded display methods
-    public static void displayInfo(String name) {
-        System.out.println("Name: " + name);
+    // Validate age
+    if (age < 0 || age > 150) {
+        System.out.println("Invalid age");
+        return;
     }
     
-    public static void displayInfo(String name, int age) {
-        System.out.println("Name: " + name + ", Age: " + age);
+    // Validate email
+    if (!email.contains("@")) {
+        System.out.println("Invalid email");
+        return;
     }
     
-    public static void displayInfo(String name, int age, String profession) {
-        System.out.println("Name: " + name + ", Age: " + age + ", Profession: " + profession);
+    // Save to database
+    System.out.println("Saving user to database...");
+    
+    // Send welcome email
+    System.out.println("Sending welcome email...");
+}
+
+// GOOD - separate methods for each responsibility
+public static boolean isValidName(String name) {
+    return name != null && !name.trim().isEmpty();
+}
+
+public static boolean isValidAge(int age) {
+    return age >= 0 && age <= 150;
+}
+
+public static boolean isValidEmail(String email) {
+    return email != null && email.contains("@") && email.contains(".");
+}
+
+public static void saveUserToDatabase(String name, int age, String email) {
+    System.out.println("Saving user " + name + " to database...");
+}
+
+public static void sendWelcomeEmail(String email) {
+    System.out.println("Sending welcome email to " + email);
+}
+
+public static void processUserGood(String name, int age, String email) {
+    if (!isValidName(name)) {
+        System.out.println("Invalid name");
+        return;
     }
     
-    // Overloaded area calculation methods
-    public static double calculateArea(double radius) {
-        // Circle area: π * r²
+    if (!isValidAge(age)) {
+        System.out.println("Invalid age");
+        return;
+    }
+    
+    if (!isValidEmail(email)) {
+        System.out.println("Invalid email");
+        return;
+    }
+    
+    saveUserToDatabase(name, age, email);
+    sendWelcomeEmail(email);
+}
+```
+
+### 2. Meaningful Method Names
+```java
+// BAD - unclear names
+public static int calc(int a, int b) { return a + b; }
+public static void process() { System.out.println("Processing..."); }
+public static boolean check(String s) { return s.length() > 0; }
+
+// GOOD - descriptive names
+public static int calculateSum(int first, int second) { return first + second; }
+public static void processPaymentTransaction() { System.out.println("Processing payment..."); }
+public static boolean isStringNotEmpty(String text) { return text.length() > 0; }
+```
+
+### 3. Method Size
+```java
+// Keep methods small and focused (generally under 20-30 lines)
+// If a method is too long, break it into smaller methods
+
+// BAD - too long and complex
+public static void processOrderBad() {
+    // 50+ lines of code doing many things
+}
+
+// GOOD - broken into smaller methods
+public static void processOrder() {
+    validateOrder();
+    calculateTotals();
+    applyDiscounts();
+    processPayment();
+    updateInventory();
+    sendConfirmation();
+}
+```
+
+## Common Method Patterns
+
+### 1. Utility Methods
+```java
+// Math utilities
+public static double calculateDistance(double x1, double y1, double x2, double y2) {
+    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+}
+
+public static boolean isPrime(int number) {
+    if (number <= 1) return false;
+    for (int i = 2; i <= Math.sqrt(number); i++) {
+        if (number % i == 0) return false;
+    }
+    return true;
+}
+
+// String utilities
+public static String capitalizeWords(String text) {
+    String[] words = text.toLowerCase().split(" ");
+    StringBuilder result = new StringBuilder();
+    for (String word : words) {
+        if (word.length() > 0) {
+            result.append(Character.toUpperCase(word.charAt(0)))
+                  .append(word.substring(1))
+                  .append(" ");
+        }
+    }
+    return result.toString().trim();
+}
+```
+
+### 2. Validation Methods
+```java
+public static boolean isValidPassword(String password) {
+    return password != null && 
+           password.length() >= 8 && 
+           password.matches(".*[A-Z].*") &&     // Has uppercase
+           password.matches(".*[a-z].*") &&     // Has lowercase
+           password.matches(".*[0-9].*") &&     // Has digit
+           password.matches(".*[!@#$%^&*].*");  // Has special char
+}
+
+public static boolean isValidCreditCard(String cardNumber) {
+    // Remove spaces and dashes
+    cardNumber = cardNumber.replaceAll("[\\s-]", "");
+    
+    // Check if all digits and proper length
+    if (!cardNumber.matches("\\d{13,19}")) {
+        return false;
+    }
+    
+    // Luhn algorithm check (simplified)
+    int sum = 0;
+    boolean alternate = false;
+    
+    for (int i = cardNumber.length() - 1; i >= 0; i--) {
+        int digit = Character.getNumericValue(cardNumber.charAt(i));
+        
+        if (alternate) {
+            digit *= 2;
+            if (digit > 9) {
+                digit = (digit % 10) + 1;
+            }
+        }
+        
+        sum += digit;
+        alternate = !alternate;
+    }
+    
+    return sum % 10 == 0;
+}
+```
+
+### 3. Factory Methods
+```java
+// Methods that create and return objects
+public static String createEmailSignature(String name, String title, String company) {
+    return "Best regards,\n" +
+           name + "\n" +
+           title + "\n" +
+           company;
+}
+
+public static int[] createNumberSequence(int start, int end, int step) {
+    int size = (end - start) / step + 1;
+    int[] sequence = new int[size];
+    
+    for (int i = 0; i < size; i++) {
+        sequence[i] = start + (i * step);
+    }
+    
+    return sequence;
+}
+```
+
+## Interview Questions & Answers
+
+**Q1: What is the difference between parameters and arguments?**
+**A:** 
+- **Parameters** are variables defined in method signature (placeholders)
+- **Arguments** are actual values passed when calling the method
+
+**Q2: What is method overloading? What are its rules?**
+**A:** Method overloading is having multiple methods with same name but different parameters. Rules:
+- Same method name
+- Different parameter list (number, type, or order)
+- Return type alone cannot differentiate overloaded methods
+
+**Q3: What is the difference between static and non-static methods?**
+**A:**
+- **Static methods** belong to class, called using class name, cannot access instance variables
+- **Non-static methods** belong to objects, called using object reference, can access instance variables
+
+**Q4: What is recursion? What are its components?**
+**A:** Recursion is when a method calls itself. Components:
+- **Base case**: Condition to stop recursion
+- **Recursive case**: Method calls itself with modified parameters
+
+**Q5: What is the purpose of the return statement?**
+**A:** Return statement:
+- Exits the method immediately
+- Returns a value to the caller (if return type is not void)
+- Can be used without value in void methods to exit early
+
+**Q6: Can we have multiple return statements in a method?**
+**A:** Yes, but only one executes per method call. Often used with conditional logic for different exit points.
+
+**Q7: What happens if we don't provide a return statement in a non-void method?**
+**A:** Compilation error occurs. Non-void methods must return a value of the specified type.
+
+## Complete Example Program
+
+```java
+import java.util.Scanner;
+import java.util.Arrays;
+
+/**
+ * Comprehensive Methods demonstration
+ */
+public class MethodsExample {
+    
+    public static void main(String[] args) {
+        demonstrateBasicMethods();
+        demonstrateMethodOverloading();
+        demonstrateVarargs();
+        demonstrateRecursion();
+        runCalculatorDemo();
+    }
+    
+    // ===== BASIC METHODS DEMONSTRATION =====
+    
+    public static void demonstrateBasicMethods() {
+        System.out.println("=== BASIC METHODS DEMONSTRATION ===");
+        
+        // Method with no parameters, no return
+        printWelcomeBanner();
+        
+        // Method with parameters, no return
+        greetUser("Alice", 25);
+        greetUser("Bob", 30);
+        
+        // Method with no parameters, with return
+        String currentTime = getCurrentTimeString();
+        System.out.println("Current time: " + currentTime);
+        
+        // Method with parameters and return
+        double circleArea = calculateCircleArea(5.0);
+        System.out.println("Circle area (radius 5): " + circleArea);
+        
+        boolean isLeapYear = checkLeapYear(2024);
+        System.out.println("2024 is leap year: " + isLeapYear);
+        
+        System.out.println();
+    }
+    
+    public static void printWelcomeBanner() {
+        System.out.println("********************************");
+        System.out.println("*     WELCOME TO JAVA METHODS    *");
+        System.out.println("********************************");
+    }
+    
+    public static void greetUser(String name, int age) {
+        System.out.println("Hello " + name + "!");
+        System.out.println("You are " + age + " years old.");
+        
+        if (age >= 18) {
+            System.out.println("You are an adult.");
+        } else {
+            System.out.println("You are a minor.");
+        }
+        System.out.println("---");
+    }
+    
+    public static String getCurrentTimeString() {
+        return "2024-12-28 14:30:00";  // Simplified for demo
+    }
+    
+    public static double calculateCircleArea(double radius) {
         return Math.PI * radius * radius;
     }
     
-    public static double calculateArea(double length, double width) {
-        // Rectangle area: length * width
+    public static boolean checkLeapYear(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    }
+    
+    // ===== METHOD OVERLOADING DEMONSTRATION =====
+    
+    public static void demonstrateMethodOverloading() {
+        System.out.println("=== METHOD OVERLOADING DEMONSTRATION ===");
+        
+        // Same method name, different parameters
+        System.out.println("Area of square (5): " + calculateArea(5));
+        System.out.println("Area of rectangle (4, 6): " + calculateArea(4, 6));
+        System.out.println("Area of circle (radius 3): " + calculateArea(3.0));
+        System.out.println("Area of triangle (base 8, height 5): " + calculateArea(8, 5, "triangle"));
+        
+        // Distance calculations
+        System.out.println("Distance 1D (5 to 10): " + calculateDistance(5, 10));
+        System.out.println("Distance 2D (0,0 to 3,4): " + calculateDistance(0, 0, 3, 4));
+        
+        System.out.println();
+    }
+    
+    // Overloaded calculateArea methods
+    public static int calculateArea(int side) {  // Square
+        return side * side;
+    }
+    
+    public static int calculateArea(int length, int width) {  // Rectangle
         return length * width;
     }
     
-    public static double calculateArea(double a, double b, double c) {
-        // Triangle area using Heron's formula
-        double s = (a + b + c) / 2; // semi-perimeter
-        return Math.sqrt(s * (s - a) * (s - b) * (s - c));
-    }
-}
-```
-
----
-
-## Scope and Lifetime
-
-### Variable Scope in Methods
-```java
-public class VariableScope {
-    // Class variable (accessible to all methods in the class)
-    private static int classVariable = 100;
-    
-    public static void main(String[] args) {
-        // Local variable in main method
-        int mainVariable = 10;
-        System.out.println("Main variable: " + mainVariable);
-        System.out.println("Class variable: " + classVariable);
-        
-        // Call method with parameter
-        demonstrateScope(20);
-        
-        // mainVariable is still accessible here
-        System.out.println("Main variable after method call: " + mainVariable);
-        
-        // Demonstrate block scope
-        demonstrateBlockScope();
+    public static double calculateArea(double radius) {  // Circle
+        return Math.PI * radius * radius;
     }
     
-    public static void demonstrateScope(int parameter) {
-        // Parameter and local variables
-        int localVariable = 30;
-        
-        System.out.println("Inside demonstrateScope:");
-        System.out.println("Parameter: " + parameter);
-        System.out.println("Local variable: " + localVariable);
-        System.out.println("Class variable: " + classVariable);
-        
-        // Modify class variable
-        classVariable = 200;
-        System.out.println("Modified class variable: " + classVariable);
-        
-        // Cannot access mainVariable here - it's out of scope
-        // System.out.println(mainVariable); // This would cause an error
+    public static double calculateArea(double base, double height, String shape) {  // Triangle
+        if ("triangle".equalsIgnoreCase(shape)) {
+            return 0.5 * base * height;
+        }
+        return 0;
     }
     
-    public static void demonstrateBlockScope() {
-        System.out.println("\nDemonstrating block scope:");
-        
-        int outerVariable = 40;
-        
-        if (true) {
-            // Block scope
-            int blockVariable = 50;
-            System.out.println("Inside block - outer variable: " + outerVariable);
-            System.out.println("Inside block - block variable: " + blockVariable);
-            
-            // Can create new variable with different name
-            int anotherBlockVariable = 60;
-            System.out.println("Another block variable: " + anotherBlockVariable);
-        }
-        
-        // blockVariable is not accessible here
-        // System.out.println(blockVariable); // This would cause an error
-        
-        System.out.println("Outside block - outer variable: " + outerVariable);
-    }
-}
-```
-
----
-
-## Real-World Method Examples
-
-### 1. Banking System Methods
-```java
-public class BankingSystem {
-    public static void main(String[] args) {
-        // Simulate banking operations
-        double currentBalance = 1000.0;
-        
-        System.out.printf("Initial Balance: $%.2f\n", currentBalance);
-        
-        // Perform transactions
-        currentBalance = deposit(currentBalance, 250.0);
-        currentBalance = withdraw(currentBalance, 100.0);
-        currentBalance = withdraw(currentBalance, 2000.0); // Should fail
-        
-        // Calculate interest
-        double newBalance = calculateInterest(currentBalance, 0.03, 12);
-        System.out.printf("Balance after 1 year with 3%% interest: $%.2f\n", newBalance);
-        
-        // Validate account details
-        boolean isValidAccount = validateAccount("12345678", "1234");
-        System.out.println("Account validation: " + (isValidAccount ? "Success" : "Failed"));
+    // Overloaded calculateDistance methods
+    public static int calculateDistance(int point1, int point2) {  // 1D distance
+        return Math.abs(point2 - point1);
     }
     
-    public static double deposit(double currentBalance, double amount) {
-        if (amount <= 0) {
-            System.out.println("Error: Deposit amount must be positive!");
-            return currentBalance;
-        }
-        
-        double newBalance = currentBalance + amount;
-        System.out.printf("Deposited $%.2f. New balance: $%.2f\n", amount, newBalance);
-        return newBalance;
+    public static double calculateDistance(double x1, double y1, double x2, double y2) {  // 2D distance
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
     
-    public static double withdraw(double currentBalance, double amount) {
-        if (amount <= 0) {
-            System.out.println("Error: Withdrawal amount must be positive!");
-            return currentBalance;
-        }
-        
-        if (amount > currentBalance) {
-            System.out.printf("Error: Insufficient funds! Cannot withdraw $%.2f (Balance: $%.2f)\n", 
-                            amount, currentBalance);
-            return currentBalance;
-        }
-        
-        double newBalance = currentBalance - amount;
-        System.out.printf("Withdrew $%.2f. New balance: $%.2f\n", amount, newBalance);
-        return newBalance;
-    }
+    // ===== VARARGS DEMONSTRATION =====
     
-    public static double calculateInterest(double principal, double annualRate, int months) {
-        double monthlyRate = annualRate / 12;
-        double finalAmount = principal * Math.pow(1 + monthlyRate, months);
-        double interest = finalAmount - principal;
+    public static void demonstrateVarargs() {
+        System.out.println("=== VARARGS DEMONSTRATION ===");
         
-        System.out.printf("Interest calculation:\n");
-        System.out.printf("Principal: $%.2f\n", principal);
-        System.out.printf("Annual rate: %.2f%%\n", annualRate * 100);
-        System.out.printf("Time: %d months\n", months);
-        System.out.printf("Interest earned: $%.2f\n", interest);
+        // Sum with different number of arguments
+        System.out.println("Sum of no numbers: " + sum());
+        System.out.println("Sum of (5): " + sum(5));
+        System.out.println("Sum of (1, 2, 3): " + sum(1, 2, 3));
+        System.out.println("Sum of (10, 20, 30, 40, 50): " + sum(10, 20, 30, 40, 50));
         
-        return finalAmount;
-    }
-    
-    public static boolean validateAccount(String accountNumber, String pin) {
-        // Simple validation (in real systems, this would check against a database)
-        boolean validAccountNumber = accountNumber.length() == 8 && 
-                                   accountNumber.matches("\\d{8}");
-        boolean validPin = pin.length() == 4 && pin.matches("\\d{4}");
+        // Print formatted messages
+        printMessage("INFO", "System started");
+        printMessage("ERROR", "Database", "connection", "failed");
+        printMessage("WARNING", "Low", "disk", "space", "detected");
         
-        if (!validAccountNumber) {
-            System.out.println("Error: Account number must be 8 digits");
-        }
-        if (!validPin) {
-            System.out.println("Error: PIN must be 4 digits");
-        }
+        // Find maximum
+        System.out.println("Max of (3, 7, 2, 9, 1): " + findMaximum(3, 7, 2, 9, 1));
         
-        return validAccountNumber && validPin;
-    }
-}
-```
-
-### 2. Text Processing Utility Methods
-```java
-public class TextUtils {
-    public static void main(String[] args) {
-        String sampleText = "  Hello World! This is a SAMPLE text for processing.  ";
-        
-        // Demonstrate text processing methods
-        System.out.println("Original: '" + sampleText + "'");
-        System.out.println("Cleaned: '" + cleanText(sampleText) + "'");
-        System.out.println("Word count: " + countWords(sampleText));
-        System.out.println("Capitalized: '" + capitalizeWords(sampleText) + "'");
-        System.out.println("Reversed: '" + reverseString(sampleText.trim()) + "'");
-        System.out.println("Is palindrome 'racecar': " + isPalindrome("racecar"));
-        System.out.println("Is palindrome 'hello': " + isPalindrome("hello"));
-        
-        // Password strength
-        testPasswordStrength("weak");
-        testPasswordStrength("StrongPass123!");
-        
-        // Text analysis
-        analyzeText("The quick brown fox jumps over the lazy dog.");
-    }
-    
-    public static String cleanText(String text) {
-        if (text == null) {
-            return "";
-        }
-        
-        // Remove leading/trailing spaces and normalize internal spaces
-        return text.trim().replaceAll("\\s+", " ");
-    }
-    
-    public static int countWords(String text) {
-        if (text == null || text.trim().isEmpty()) {
-            return 0;
-        }
-        
-        String cleanedText = cleanText(text);
-        String[] words = cleanedText.split("\\s+");
-        return words.length;
-    }
-    
-    public static String capitalizeWords(String text) {
-        if (text == null || text.isEmpty()) {
-            return text;
-        }
-        
-        String[] words = cleanText(text).split("\\s+");
-        StringBuilder result = new StringBuilder();
-        
-        for (int i = 0; i < words.length; i++) {
-            String word = words[i];
-            if (word.length() > 0) {
-                // Capitalize first letter, lowercase the rest
-                String capitalizedWord = word.substring(0, 1).toUpperCase() + 
-                                       word.substring(1).toLowerCase();
-                result.append(capitalizedWord);
-                
-                if (i < words.length - 1) {
-                    result.append(" ");
-                }
-            }
-        }
-        
-        return result.toString();
-    }
-    
-    public static String reverseString(String text) {
-        if (text == null) {
-            return null;
-        }
-        
-        StringBuilder reversed = new StringBuilder();
-        for (int i = text.length() - 1; i >= 0; i--) {
-            reversed.append(text.charAt(i));
-        }
-        
-        return reversed.toString();
-    }
-    
-    public static boolean isPalindrome(String text) {
-        if (text == null) {
-            return false;
-        }
-        
-        // Convert to lowercase and remove non-letter characters
-        String cleaned = text.toLowerCase().replaceAll("[^a-z]", "");
-        
-        int left = 0;
-        int right = cleaned.length() - 1;
-        
-        while (left < right) {
-            if (cleaned.charAt(left) != cleaned.charAt(right)) {
-                return false;
-            }
-            left++;
-            right--;
-        }
-        
-        return true;
-    }
-    
-    public static int getPasswordStrength(String password) {
-        if (password == null) return 0;
-        
-        int strength = 0;
-        
-        // Check length
-        if (password.length() >= 8) strength++;
-        if (password.length() >= 12) strength++;
-        
-        // Check character types
-        if (password.matches(".*[a-z].*")) strength++; // Lowercase
-        if (password.matches(".*[A-Z].*")) strength++; // Uppercase
-        if (password.matches(".*\\d.*")) strength++;   // Digits
-        if (password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) strength++; // Special chars
-        
-        return strength;
-    }
-    
-    public static void testPasswordStrength(String password) {
-        int strength = getPasswordStrength(password);
-        String level;
-        
-        switch (strength) {
-            case 0:
-            case 1:
-                level = "Very Weak";
-                break;
-            case 2:
-            case 3:
-                level = "Weak";
-                break;
-            case 4:
-                level = "Moderate";
-                break;
-            case 5:
-                level = "Strong";
-                break;
-            case 6:
-                level = "Very Strong";
-                break;
-            default:
-                level = "Unknown";
-        }
-        
-        System.out.printf("Password '%s' strength: %s (%d/6)\n", password, level, strength);
-    }
-    
-    public static void analyzeText(String text) {
-        if (text == null) {
-            System.out.println("Cannot analyze null text");
-            return;
-        }
-        
-        System.out.println("\nText Analysis:");
-        System.out.println("Text: " + text);
-        System.out.println("Length: " + text.length() + " characters");
-        System.out.println("Words: " + countWords(text));
-        
-        // Count vowels and consonants
-        int vowels = 0, consonants = 0;
-        String lowerText = text.toLowerCase();
-        
-        for (char c : lowerText.toCharArray()) {
-            if (Character.isLetter(c)) {
-                if ("aeiou".indexOf(c) != -1) {
-                    vowels++;
-                } else {
-                    consonants++;
-                }
-            }
-        }
-        
-        System.out.println("Vowels: " + vowels);
-        System.out.println("Consonants: " + consonants);
         System.out.println();
     }
-}
-```
-
-### 3. Math Utility Methods
-```java
-public class MathUtils {
-    public static void main(String[] args) {
-        // Test mathematical utility methods
-        System.out.println("Factorial of 5: " + factorial(5));
-        System.out.println("Fibonacci of 10: " + fibonacci(10));
-        System.out.println("GCD of 48 and 18: " + gcd(48, 18));
-        System.out.println("LCM of 12 and 8: " + lcm(12, 8));
+    
+    public static int sum(int... numbers) {
+        int total = 0;
+        for (int number : numbers) {
+            total += number;
+        }
+        return total;
+    }
+    
+    public static void printMessage(String level, String... parts) {
+        System.out.print("[" + level + "] ");
+        for (String part : parts) {
+            System.out.print(part + " ");
+        }
+        System.out.println();
+    }
+    
+    public static int findMaximum(int... numbers) {
+        if (numbers.length == 0) {
+            throw new IllegalArgumentException("At least one number required");
+        }
         
-        System.out.println("Is 17 prime? " + isPrime(17));
-        System.out.println("Is 15 prime? " + isPrime(15));
+        int max = numbers[0];
+        for (int number : numbers) {
+            if (number > max) {
+                max = number;
+            }
+        }
+        return max;
+    }
+    
+    // ===== RECURSION DEMONSTRATION =====
+    
+    public static void demonstrateRecursion() {
+        System.out.println("=== RECURSION DEMONSTRATION ===");
+        
+        // Factorial calculation
+        System.out.println("Factorial of 5: " + factorial(5));
+        System.out.println("Factorial of 7: " + factorial(7));
+        
+        // Fibonacci sequence
+        System.out.print("Fibonacci sequence (first 10): ");
+        for (int i = 0; i < 10; i++) {
+            System.out.print(fibonacci(i) + " ");
+        }
+        System.out.println();
         
         // Power calculation
-        System.out.println("2^10 = " + power(2, 10));
-        System.out.println("3.5^2 = " + power(3.5, 2));
+        System.out.println("2 to the power of 8: " + power(2, 8));
+        System.out.println("3 to the power of 4: " + power(3, 4));
         
-        // Statistical functions
-        int[] numbers = {5, 10, 15, 20, 25, 30};
-        System.out.println("Array: " + java.util.Arrays.toString(numbers));
-        System.out.println("Sum: " + sum(numbers));
-        System.out.println("Average: " + average(numbers));
-        System.out.println("Max: " + max(numbers));
-        System.out.println("Min: " + min(numbers));
+        // String reversal
+        System.out.println("Reverse of 'Hello': " + reverseString("Hello"));
+        System.out.println("Reverse of 'Recursion': " + reverseString("Recursion"));
+        
+        // Sum of digits
+        System.out.println("Sum of digits in 12345: " + sumOfDigits(12345));
+        
+        System.out.println();
     }
     
     public static long factorial(int n) {
-        if (n < 0) {
-            throw new IllegalArgumentException("Factorial is not defined for negative numbers");
-        }
-        
-        if (n == 0 || n == 1) {
+        // Base case
+        if (n <= 1) {
             return 1;
         }
-        
-        long result = 1;
-        for (int i = 2; i <= n; i++) {
-            result *= i;
-        }
-        
-        return result;
+        // Recursive case
+        return n * factorial(n - 1);
     }
     
     public static int fibonacci(int n) {
-        if (n < 0) {
-            throw new IllegalArgumentException("Fibonacci is not defined for negative numbers");
-        }
-        
-        if (n == 0) return 0;
+        // Base cases
+        if (n <= 0) return 0;
         if (n == 1) return 1;
         
-        int prev1 = 0, prev2 = 1;
-        int current = 0;
-        
-        for (int i = 2; i <= n; i++) {
-            current = prev1 + prev2;
-            prev1 = prev2;
-            prev2 = current;
-        }
-        
-        return current;
+        // Recursive case
+        return fibonacci(n - 1) + fibonacci(n - 2);
     }
     
-    public static int gcd(int a, int b) {
-        // Euclidean algorithm for Greatest Common Divisor
-        a = Math.abs(a);
-        b = Math.abs(b);
-        
-        while (b != 0) {
-            int temp = b;
-            b = a % b;
-            a = temp;
-        }
-        
-        return a;
-    }
-    
-    public static int lcm(int a, int b) {
-        // Least Common Multiple = (a * b) / GCD(a, b)
-        if (a == 0 || b == 0) {
-            return 0;
-        }
-        
-        return Math.abs(a * b) / gcd(a, b);
-    }
-    
-    public static boolean isPrime(int n) {
-        if (n < 2) {
-            return false;
-        }
-        
-        if (n == 2) {
-            return true;
-        }
-        
-        if (n % 2 == 0) {
-            return false;
-        }
-        
-        // Check odd divisors up to sqrt(n)
-        for (int i = 3; i * i <= n; i += 2) {
-            if (n % i == 0) {
-                return false;
-            }
-        }
-        
-        return true;
-    }
-    
-    public static double power(double base, int exponent) {
+    public static long power(int base, int exponent) {
+        // Base case
         if (exponent == 0) {
             return 1;
         }
         
-        if (exponent < 0) {
-            return 1.0 / power(base, -exponent);
-        }
-        
-        double result = 1;
-        for (int i = 0; i < exponent; i++) {
-            result *= base;
-        }
-        
-        return result;
+        // Recursive case
+        return base * power(base, exponent - 1);
     }
     
-    // Statistical methods for arrays
-    public static int sum(int[] array) {
-        if (array == null || array.length == 0) {
-            return 0;
+    public static String reverseString(String str) {
+        // Base case
+        if (str == null || str.length() <= 1) {
+            return str;
         }
         
-        int total = 0;
+        // Recursive case
+        return reverseString(str.substring(1)) + str.charAt(0);
+    }
+    
+    public static int sumOfDigits(int number) {
+        // Base case
+        if (number < 10) {
+            return number;
+        }
+        
+        // Recursive case
+        return (number % 10) + sumOfDigits(number / 10);
+    }
+    
+    // ===== CALCULATOR DEMO =====
+    
+    public static void runCalculatorDemo() {
+        System.out.println("=== CALCULATOR DEMO ===");
+        
+        Scanner scanner = new Scanner(System.in);
+        
+        while (true) {
+            System.out.println("\nCalculator Menu:");
+            System.out.println("1. Basic Operations");
+            System.out.println("2. Advanced Operations");
+            System.out.println("3. Array Operations");
+            System.out.println("4. String Operations");
+            System.out.println("5. Exit");
+            System.out.print("Enter choice (1-5): ");
+            
+            int choice = scanner.nextInt();
+            
+            switch (choice) {
+                case 1:
+                    basicOperations(scanner);
+                    break;
+                case 2:
+                    advancedOperations(scanner);
+                    break;
+                case 3:
+                    arrayOperations(scanner);
+                    break;
+                case 4:
+                    stringOperations(scanner);
+                    break;
+                case 5:
+                    System.out.println("Thank you for using the calculator!");
+                    return;
+                default:
+                    System.out.println("Invalid choice! Please try again.");
+            }
+        }
+    }
+    
+    private static void basicOperations(Scanner scanner) {
+        System.out.print("Enter first number: ");
+        double num1 = scanner.nextDouble();
+        System.out.print("Enter second number: ");
+        double num2 = scanner.nextDouble();
+        
+        System.out.println("Results:");
+        System.out.println("Addition: " + add(num1, num2));
+        System.out.println("Subtraction: " + subtract(num1, num2));
+        System.out.println("Multiplication: " + multiply(num1, num2));
+        System.out.println("Division: " + divide(num1, num2));
+        System.out.println("Modulus: " + modulus(num1, num2));
+    }
+    
+    private static void advancedOperations(Scanner scanner) {
+        System.out.print("Enter a number: ");
+        double num = scanner.nextDouble();
+        
+        System.out.println("Results:");
+        System.out.println("Square: " + square(num));
+        System.out.println("Cube: " + cube(num));
+        System.out.println("Square root: " + squareRoot(num));
+        System.out.println("Absolute value: " + absoluteValue(num));
+        System.out.println("Is even: " + isEven((int)num));
+        System.out.println("Is prime: " + isPrime((int)num));
+    }
+    
+    private static void arrayOperations(Scanner scanner) {
+        System.out.print("Enter array size: ");
+        int size = scanner.nextInt();
+        int[] array = new int[size];
+        
+        System.out.println("Enter " + size + " numbers:");
+        for (int i = 0; i < size; i++) {
+            array[i] = scanner.nextInt();
+        }
+        
+        System.out.println("Array: " + Arrays.toString(array));
+        System.out.println("Sum: " + sumArray(array));
+        System.out.println("Average: " + averageArray(array));
+        System.out.println("Maximum: " + findMax(array));
+        System.out.println("Minimum: " + findMin(array));
+        System.out.println("Sorted: " + Arrays.toString(sortArray(array)));
+    }
+    
+    private static void stringOperations(Scanner scanner) {
+        scanner.nextLine(); // Consume newline
+        System.out.print("Enter a string: ");
+        String text = scanner.nextLine();
+        
+        System.out.println("Results:");
+        System.out.println("Length: " + getStringLength(text));
+        System.out.println("Uppercase: " + toUpperCase(text));
+        System.out.println("Lowercase: " + toLowerCase(text));
+        System.out.println("Reversed: " + reverseString(text));
+        System.out.println("Is palindrome: " + isPalindrome(text));
+        System.out.println("Vowel count: " + countVowels(text));
+        System.out.println("Word count: " + countWords(text));
+    }
+    
+    // Basic operation methods
+    public static double add(double a, double b) { return a + b; }
+    public static double subtract(double a, double b) { return a - b; }
+    public static double multiply(double a, double b) { return a * b; }
+    public static double divide(double a, double b) { 
+        return b != 0 ? a / b : Double.POSITIVE_INFINITY; 
+    }
+    public static double modulus(double a, double b) { return a % b; }
+    
+    // Advanced operation methods
+    public static double square(double num) { return num * num; }
+    public static double cube(double num) { return num * num * num; }
+    public static double squareRoot(double num) { return Math.sqrt(num); }
+    public static double absoluteValue(double num) { return Math.abs(num); }
+    
+    public static boolean isEven(int num) { return num % 2 == 0; }
+    
+    public static boolean isPrime(int num) {
+        if (num <= 1) return false;
+        if (num == 2) return true;
+        if (num % 2 == 0) return false;
+        
+        for (int i = 3; i <= Math.sqrt(num); i += 2) {
+            if (num % i == 0) return false;
+        }
+        return true;
+    }
+    
+    // Array operation methods
+    public static int sumArray(int[] array) {
+        int sum = 0;
         for (int num : array) {
-            total += num;
+            sum += num;
         }
-        
-        return total;
+        return sum;
     }
     
-    public static double average(int[] array) {
-        if (array == null || array.length == 0) {
-            return 0;
-        }
-        
-        return (double) sum(array) / array.length;
+    public static double averageArray(int[] array) {
+        return array.length > 0 ? (double) sumArray(array) / array.length : 0;
     }
     
-    public static int max(int[] array) {
-        if (array == null || array.length == 0) {
-            throw new IllegalArgumentException("Array cannot be null or empty");
+    public static int findMax(int[] array) {
+        if (array.length == 0) return Integer.MIN_VALUE;
+        int max = array[0];
+        for (int num : array) {
+            if (num > max) max = num;
         }
-        
-        int maximum = array[0];
-        for (int i = 1; i < array.length; i++) {
-            if (array[i] > maximum) {
-                maximum = array[i];
+        return max;
+    }
+    
+    public static int findMin(int[] array) {
+        if (array.length == 0) return Integer.MAX_VALUE;
+        int min = array[0];
+        for (int num : array) {
+            if (num < min) min = num;
+        }
+        return min;
+    }
+    
+    public static int[] sortArray(int[] array) {
+        int[] sorted = array.clone();
+        Arrays.sort(sorted);
+        return sorted;
+    }
+    
+    // String operation methods
+    public static int getStringLength(String str) { return str.length(); }
+    public static String toUpperCase(String str) { return str.toUpperCase(); }
+    public static String toLowerCase(String str) { return str.toLowerCase(); }
+    
+    public static boolean isPalindrome(String str) {
+        String cleaned = str.toLowerCase().replaceAll("[^a-zA-Z0-9]", "");
+        return cleaned.equals(reverseString(cleaned));
+    }
+    
+    public static int countVowels(String str) {
+        int count = 0;
+        String vowels = "aeiouAEIOU";
+        for (char c : str.toCharArray()) {
+            if (vowels.indexOf(c) != -1) {
+                count++;
             }
         }
-        
-        return maximum;
+        return count;
     }
     
-    public static int min(int[] array) {
-        if (array == null || array.length == 0) {
-            throw new IllegalArgumentException("Array cannot be null or empty");
-        }
-        
-        int minimum = array[0];
-        for (int i = 1; i < array.length; i++) {
-            if (array[i] < minimum) {
-                minimum = array[i];
-            }
-        }
-        
-        return minimum;
+    public static int countWords(String str) {
+        if (str == null || str.trim().isEmpty()) return 0;
+        return str.trim().split("\\s+").length;
     }
-}
-```
-
----
-
-## Common Method Patterns
-
-### 1. Validation Methods
-```java
-public class ValidationMethods {
-    public static boolean isValidEmail(String email) {
-        return email != null && 
-               email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}");
-    }
-    
-    public static boolean isValidAge(int age) {
-        return age >= 0 && age <= 120;
-    }
-    
-    public static boolean isValidPhoneNumber(String phone) {
-        return phone != null && 
-               phone.matches("\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}");
-    }
-}
-```
-
-### 2. Utility Methods
-```java
-public class UtilityMethods {
-    public static String formatCurrency(double amount) {
-        return String.format("$%.2f", amount);
-    }
-    
-    public static String truncateString(String str, int maxLength) {
-        if (str == null) return null;
-        if (str.length() <= maxLength) return str;
-        return str.substring(0, maxLength - 3) + "...";
-    }
-    
-    public static boolean isEmpty(String str) {
-        return str == null || str.trim().isEmpty();
-    }
-}
-```
-
-### 3. Conversion Methods
-```java
-public class ConversionMethods {
-    public static double celsiusToFahrenheit(double celsius) {
-        return (celsius * 9.0 / 5.0) + 32;
-    }
-    
-    public static double fahrenheitToCelsius(double fahrenheit) {
-        return (fahrenheit - 32) * 5.0 / 9.0;
-    }
-    
-    public static int binaryToDecimal(String binary) {
-        return Integer.parseInt(binary, 2);
-    }
-}
-```
-
----
-
-## Practice Exercises
-
-### Exercise 1: Calculator Methods
-```java
-public class Calculator {
-    public static void main(String[] args) {
-        // Implement a calculator with these methods:
-        // add(double, double)
-        // subtract(double, double)  
-        // multiply(double, double)
-        // divide(double, double) - handle division by zero
-        // percentage(double, double) - calculate percentage
-        // power(double, int) - raise to power
-        
-        // Test all methods with sample values
-    }
-}
-```
-
-### Exercise 2: String Processor
-```java
-public class StringProcessor {
-    public static void main(String[] args) {
-        // Implement these string processing methods:
-        // removeVowels(String) - remove all vowels
-        // countCharacter(String, char) - count occurrences of character
-        // reverseWords(String) - reverse each word but keep word order
-        // caesarCipher(String, int) - shift characters by n positions
-        // removeExtraSpaces(String) - normalize spacing
-        
-        String test = "Hello World Programming";
-        // Test all methods with the test string
-    }
-}
-```
-
-### Exercise 3: Number Analytics
-```java
-public class NumberAnalytics {
-    public static void main(String[] args) {
-        // Implement these number analysis methods:
-        // isEven(int), isOdd(int)
-        // isPerfectNumber(int) - sum of factors equals number
-        // reverseNumber(int) - reverse digits
-        // sumOfDigits(int) - sum all digits
-        // isPalindromic(int) - reads same forwards and backwards
-        // getNthPrime(int) - get the nth prime number
-        
-        // Test with various numbers
-    }
-}
-```
-
-## Method Design Best Practices
-
-### 1. Single Responsibility
-```java
-// ✓ GOOD - Each method does one thing
-public static double calculateArea(double radius) {
-    return Math.PI * radius * radius;
-}
-
-public static void printArea(double area) {
-    System.out.printf("Area: %.2f\n", area);
-}
-
-// ✗ POOR - Method does too many things
-public static void calculateAndPrintArea(double radius) {
-    double area = Math.PI * radius * radius;
-    System.out.printf("Area: %.2f\n", area);
-    // Also logging, validation, formatting...
-}
-```
-
-### 2. Clear Method Names
-```java
-// ✓ GOOD - Clear, descriptive names
-public static boolean isValidPassword(String password) { ... }
-public static double calculateMonthlyPayment(double principal, double rate, int months) { ... }
-public static String formatPhoneNumber(String phone) { ... }
-
-// ✗ POOR - Unclear names
-public static boolean check(String s) { ... }
-public static double calc(double a, double b, int c) { ... }
-public static String format(String s) { ... }
-```
-
-### 3. Input Validation
-```java
-public static double divide(double dividend, double divisor) {
-    if (divisor == 0) {
-        throw new IllegalArgumentException("Cannot divide by zero");
-    }
-    return dividend / divisor;
-}
-
-public static String capitalizeFirstLetter(String text) {
-    if (text == null || text.isEmpty()) {
-        return text;
-    }
-    return text.substring(0, 1).toUpperCase() + text.substring(1);
 }
 ```
 
 ## Key Takeaways
 
-1. **Methods break code into manageable, reusable pieces**
-2. **Choose descriptive names** that clearly indicate what the method does
-3. **Keep methods focused** on a single responsibility
-4. **Use parameters** to make methods flexible and reusable
-5. **Return values** when the method produces a result
-6. **Method overloading** allows multiple versions with different parameters
-7. **Validate inputs** to prevent errors and unexpected behavior
-8. **Organize related methods** into logical groups or classes
-9. **Write methods that are easy to test** independently
-10. **Good methods make code more readable, maintainable, and debuggable**
+1. **Methods organize code** into reusable blocks
+2. **Single Responsibility**: Each method should do one thing well
+3. **Method overloading** allows same name with different parameters
+4. **Varargs** enable flexible parameter counts
+5. **Recursion** is powerful for problems with self-similar subproblems
+6. **Static methods** belong to class, non-static to objects
+7. **Access modifiers** control method visibility
+8. **Good naming** makes code self-documenting
+9. **Small methods** are easier to understand and test
+10. **Return early** to avoid deep nesting in conditional logic
 
-Methods are fundamental building blocks that transform scattered code into organized, professional programs!
+---
+
+*Remember: Methods are like building blocks - small, focused pieces that combine to create complex and powerful programs!*
