@@ -22,7 +22,6 @@ Welcome! This repository is a **curriculum-style workspace** that takes you from
 - **09-Modern-Java-Ecosystem**: Spring Core, Spring Boot (REST, data, security, observability, testing, deployment), cloud and performance notes
 
 ## Folder structure (linked tree)
-- [.github](.github/)
 - [01-Java-Fundamentals](01-Java-Fundamentals/)
   - [01-Introduction-and-Environment](01-Java-Fundamentals/01-Introduction-and-Environment/)
   - [02-JVM-JRE-JDK](01-Java-Fundamentals/02-JVM-JRE-JDK/)
