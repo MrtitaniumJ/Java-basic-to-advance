@@ -7,11 +7,14 @@ public class Operators {
         int sum3 = sum2 + sum2; // 800 (400 + 400)
 
         // Following are the types of operators in Java:
-        // 1. Arithmetic Operators
-        // 2. Assignment Operators
-        // 3. Comparison Operators
-        // 4. Logical Operators
-        // 5. Bitwise Operators
+        // 1. Arithmetic Operators (+, -, *, /, %, ++, --)
+        // 2. Assignment Operators (=, +=, -=, *=, /=, %=, &=, |=, ^=, <<=, >>=)        
+        // 3. Comparison Operators (==, !=, >, <, >=, <=)
+        // 4. Logical Operators (&&, ||, !)
+        // 5. Bitwise Operators (&, |, ^, ~, <<, >>, >>>)
+        // 6. Ternary Operator ( ? : )
+        // 7. instanceof Operator
+        // 8. Unary Operators (+, -, ++, --, !)
 
         // 1. Arithmetic Operators
         // + -> Addition - Adds two values together
