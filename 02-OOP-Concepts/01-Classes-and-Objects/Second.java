@@ -1,6 +1,6 @@
-class Second extends First {
+class Second {
     public static void main(String[] args) {
-        Second myObj = new Second(); // Create object of child class
-        System.out.println(myObj.x); // Inherited from First
+        First myObj = new First(); // Create an object of the First class
+        System.out.println(myObj.x); // Access the property of the object
     }
 }

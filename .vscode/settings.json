@@ -1,3 +1,12 @@
 {
-    "java.debug.settings.onBuildFailureProceed": true
-}
+    "java.project.sourcePaths": [
+        "02-OOP-Concepts/02-Constructors",
+        "02-OOP-Concepts/01-Classes-and-Objects",
+        "01-Java-Fundamentals/12-Loops/Patterns"
+    ]
+} // {
+//     "java.debug.settings.onBuildFailureProceed": true,
+//     "java.project.sourcePaths": [
+//         "02-OOP-Concepts/01-Classes-and-Objects"
+//     ]
+// }
